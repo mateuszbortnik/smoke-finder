@@ -52,14 +52,14 @@ if st.button('Get data'):
             break
 
 
-        results=response
+        
 
 
     #EXTRACT
-    def extract_product_details_from_list(results):
+    def extract_product_details_from_list(response):
         all_products = []
 
-        for result in results:
+        for result in response:
             tasks = result.get("tasks", [])
 
             for task in tasks:
