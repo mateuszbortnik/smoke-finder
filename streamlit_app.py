@@ -74,7 +74,7 @@ if st.button('Get data'):
                 if isinstance(result_data, dict) and "items" in result_data:
                     items = result_data["items"]
                 elif isinstance(result_data, list) and "items" in result_data[0]:
-                    items = result_data[0]["items"]
+                    items = result_data[-1]["items"]
                 else:
                     items = []
 
