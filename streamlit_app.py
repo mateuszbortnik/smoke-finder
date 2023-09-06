@@ -36,10 +36,12 @@ if st.button('Get data'):
     response = client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}")
 
     # Check for successful response
+    # Check for successful response
     if response['status_code'] == 20000:
         results = []  # Initialize or clear the results list
         
-        if response['result'] and len(response['result']) > 0:  # Make sure there is data to process
+        # Safety check to ensure 'result' key exists and has data
+        if 'result' in response and response['result'] and len(response['result']) > 0:
             for resultTaskInfo in response['result']:
                 if resultTaskInfo['id'] == task_id:  # Check if the task ID matches
                     results.append(client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}"))
@@ -48,6 +50,7 @@ if st.button('Get data'):
         # Do something with the result
     else:
         print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
+
 
 
     st.write(results)
