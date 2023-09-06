@@ -41,7 +41,7 @@ if st.button('Get data'):
         print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
 
    
-    time.sleep(5.5)
+    # time.sleep(5.5)
 
     #GET
     response = client.get("/v3/business_data/trustpilot/reviews/tasks_ready")
@@ -63,7 +63,7 @@ if st.button('Get data'):
         print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
 
     st.write(results)
-
+    st.write(tasks)
 
     #EXTRACT
     def extract_product_details_from_list(results):
