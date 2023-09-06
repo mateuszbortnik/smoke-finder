@@ -44,7 +44,7 @@ if st.button('Get data'):
         # Check if the task is in the queue
         task_status = response['tasks'][0]['status_message']
         if task_status == "Task In Queue":
-            print("Task is still in the queue. Please wait.")
+            st.write("Task is still in the queue. Please wait.")
         else:
             # Safety check to ensure 'result' key exists and has data
             if 'result' in response and response['result'] and len(response['result']) > 0:
@@ -52,10 +52,10 @@ if st.button('Get data'):
                     if resultTaskInfo['id'] == task_id:  # Check if the task ID matches
                         results.append(client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}"))
 
-            print(results)
+            st.write(results)
             # Do something with the result
     else:
-        print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
+        st.write("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
 
     st.write(results)
 
