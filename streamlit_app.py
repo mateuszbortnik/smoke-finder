@@ -31,10 +31,11 @@ if st.button('Get data'):
 
     # Save the task ID from the POST request response
     task_id = response["tasks"][0]["id"]
+    st.write(task_id)
 
     # GET
     response = client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}")
-
+    st.write(response)
     # Check for successful response
     # Check for successful response
     if response['status_code'] == 20000:
