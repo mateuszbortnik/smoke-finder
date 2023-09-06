@@ -79,7 +79,14 @@ if st.button('Get data'):
 
     st.success("Success!")
     df = pd.DataFrame.from_dict(products)
-    df.to_csv("reviews.csv")
+    csv = df.to_csv("reviews.csv")
     st.write(df)
+    st.download_button(
+   "Press to Download",
+   csv,
+   "file.csv",
+   "text/csv",
+   key='download-csv')
+            
 
 
