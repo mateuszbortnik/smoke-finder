@@ -51,11 +51,11 @@ if st.button('Get data'):
         tasks = response['tasks']
         if tasks:  # Check if the list is not empty
             last_task = tasks  # Get the last task
-            if last_task['result'] and len(last_task['result']) > 0:
-                for resultTaskInfo in last_task['result']:
-                    if resultTaskInfo['id']:
-                        single_result = client.get("/v3/business_data/trustpilot/reviews/task_get/" + resultTaskInfo['id'])
-                        results = [single_result]  # Overwrite the results list with the new result
+            # if last_task['result'] and len(last_task['result']) > 0:
+            for resultTaskInfo in last_task['result']:
+                if resultTaskInfo['id']:
+                    single_result = client.get("/v3/business_data/trustpilot/reviews/task_get/" + resultTaskInfo['id'])
+                    results = [single_result]  # Overwrite the results list with the new result
                         
         print(results)
         # do something with result
