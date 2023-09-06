@@ -27,7 +27,7 @@ if st.button('Get data'):
     time.sleep(2)
 
     # GET request to fetch the results of the task
-    MAX_RETRIES = 100
+    MAX_RETRIES = 100000
     WAIT_TIME = 10
     retry_count = 0
     task_ready = False
