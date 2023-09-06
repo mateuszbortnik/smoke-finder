@@ -44,12 +44,13 @@ if st.button('Get data'):
                 st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
                 retry_count += 1
                 time.sleep(WAIT_TIME)
-            else:
+            elif task_status == "Ok.":  # Only set task_ready = True when the task is actually complete
                 task_ready = True
                 st.write("Task is ready.")  # Debugging line
         else:
             st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
             break
+
 
 
 
