@@ -29,24 +29,26 @@ if st.button('Get data'):
     st.write(response)
     # time.sleep(5.5)
 
-    #GET
-    response = client.get("/v3/business_data/trustpilot/reviews/tasks_ready")
-    # you can find the full list of the response codes here https://docs.dataforseo.com/v3/appendix/errors
+    # Save the task ID from the POST request response
+    task_id = response["tasks"][0]["id"]
+
+    # GET
+    response = client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}")
+
+    # Check for successful response
     if response['status_code'] == 20000:
-        results = []  # Clear the results list
-        tasks = response['tasks']
-        if tasks:  # Check if the list is not empty
-            last_task = tasks[-1]  # Get the last task
-            if last_task['result'] and len(last_task['result']) > 0:
-                for resultTaskInfo in last_task['result']:
-                    if resultTaskInfo['id']:
-                        single_result = client.get("/v3/business_data/trustpilot/reviews/task_get/" + resultTaskInfo['id'])
-                        results = [single_result]  # Overwrite the results list with the new result
-                        
+        results = []  # Initialize or clear the results list
+        
+        if response['result'] and len(response['result']) > 0:  # Make sure there is data to process
+            for resultTaskInfo in response['result']:
+                if resultTaskInfo['id'] == task_id:  # Check if the task ID matches
+                    results.append(client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}"))
+
         print(results)
-        # do something with result
+        # Do something with the result
     else:
         print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
+
 
     st.write(results)
     st.write(tasks)
