@@ -54,7 +54,7 @@ if st.button('Get data'):
 
 
     st.write(results)
-    st.write(tasks)
+
 
     #EXTRACT
     def extract_product_details_from_list(results):
