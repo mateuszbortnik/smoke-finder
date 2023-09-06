@@ -49,7 +49,7 @@ if st.button('Get data'):
         results = []  # Clear the results list
         tasks = response['tasks']
         if tasks:  # Check if the list is not empty
-            last_task = tasks[-1]  # Get the last task
+            last_task = tasks[0]  # Get the last task
             if last_task['result'] and len(last_task['result']) > 0:
                 for resultTaskInfo in last_task['result']:
                     if resultTaskInfo['id']:
