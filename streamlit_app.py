@@ -27,7 +27,7 @@ if st.button('Get data'):
         print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
 
     st.write(response)
-    # time.sleep(5.5)
+    time.sleep(2)
 
     # Save the task ID from the POST request response
     task_id = response["tasks"][0]["id"]
