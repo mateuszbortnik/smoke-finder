@@ -97,6 +97,7 @@ if st.button('Get data'):
 
     st.success("Success!")
     df = pd.DataFrame.from_dict(products)
+    df.to_csv("reviews.csv")
     df
 
 
