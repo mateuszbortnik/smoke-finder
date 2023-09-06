@@ -42,23 +42,19 @@ response = client.get("/v3/business_data/trustpilot/reviews/tasks_ready")
 # you can find the full list of the response codes here https://docs.dataforseo.com/v3/appendix/errors
 if response['status_code'] == 20000:
     results = []
-    for task in response['tasks']:
-        if (task['result'] and (len(task['result']) > 0)):
-            for resultTaskInfo in task['result']:
-                # 2 - using this method you can get results of each completed task
-        # GET /v3/business_data/trustpilot/reviews/task_get/$id
-                # if(resultTaskInfo['/v3/business_data/trustpilot/reviews/task_get/08162032-6487-0358-0000-03c0bf7225a6']):
-                #     results.append(client.get(resultTaskInfo['/v3/business_data/trustpilot/reviews/task_get/08162032-6487-0358-0000-03c0bf7225a6']))
-
-                # 3 - another way to get the task results by id
-                # GET /v3/business_data/trustpilot/reviews/task_get/$id
-                if(resultTaskInfo['id']):
+    tasks = response['tasks']
+    if tasks:  # Check if the list is not empty
+        last_task = tasks[-1]  # Get the last task
+        if last_task['result'] and len(last_task['result']) > 0:
+            for resultTaskInfo in last_task['result']:
+                if resultTaskInfo['id']:
                     results.append(client.get("/v3/business_data/trustpilot/reviews/task_get/" + resultTaskInfo['id']))
-
+                    
     print(results)
     # do something with result
 else:
     print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
+
 
 
 #EXTRACT
