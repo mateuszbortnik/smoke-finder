@@ -86,7 +86,7 @@ if st.button('Get data'):
         return all_products
 
     # Usage
-    products = extract_product_details_from_list(results)
+    products = extract_product_details_from_list(response)
     print(products)  # This should print the details of the first product
 
     st.success("Success!")
