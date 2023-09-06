@@ -16,21 +16,7 @@ if st.button('Get data'):
     post_data[len(post_data)] = dict(
         domain=domain
     )
-    # after a task is completed, we will send a GET request to the address you specify
-    # instead of $id and $tag, you will receive actual values that are relevant to this task
-    post_data[len(post_data)] = dict(
-        domain=domain,
-        depth=100,
-        # priority=2,
-        # tag="some_string_123",
-        pingback_url="https://your-server.com/pingscript?id=$id&tag=$tag"
-    )
-    # after a task is completed, we will send a GET request to the address you specify
-    # instead of $id and $tag, you will receive actual values that are relevant to this task
-    post_data[len(post_data)] = dict(
-        domain=domain,
-        postback_url="https://your-server.com/postbackscript"
-    )
+
     # POST /v3/business_data/trustpilot/reviews/task_post
     response = client.post("/v3/business_data/trustpilot/reviews/task_post", post_data)
     # you can find the full list of the response codes here https://docs.dataforseo.com/v3/appendix/errors
@@ -50,12 +36,12 @@ if st.button('Get data'):
         results = []  # Clear the results list
         tasks = response['tasks']
         if tasks:  # Check if the list is not empty
-            last_task = tasks  # Get the last task
-            # if last_task['result'] and len(last_task['result']) > 0:
-            for resultTaskInfo in last_task['result']:
-                if resultTaskInfo['id']:
-                    single_result = client.get("/v3/business_data/trustpilot/reviews/task_get/" + resultTaskInfo['id'])
-                    results = [single_result]  # Overwrite the results list with the new result
+            last_task = tasks[-1]  # Get the last task
+            if last_task['result'] and len(last_task['result']) > 0:
+                for resultTaskInfo in last_task['result']:
+                    if resultTaskInfo['id']:
+                        single_result = client.get("/v3/business_data/trustpilot/reviews/task_get/" + resultTaskInfo['id'])
+                        results = [single_result]  # Overwrite the results list with the new result
                         
         print(results)
         # do something with result
