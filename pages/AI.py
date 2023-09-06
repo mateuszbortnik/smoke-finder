@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.pool import StaticPool
 from langchain import OpenAI, SQLDatabase
 # from langchain_experimental.sql import SQLDatabaseChain
+import openai
 
 
 #####################################
