@@ -3,75 +3,62 @@ import client
 from client import RestClient
 import pandas as pd
 import time
+
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 st.title("Trustpilot reviews")
 domain = st.text_input('Domain', 'www.ashleystewart.com')
 
 if st.button('Get data'):
-
-    #POST
+    # POST request to enqueue a task
     post_data = dict()
-    # simple way to set a task
-    post_data[len(post_data)] = dict(
-        domain=domain
-    )
-
-    # POST /v3/business_data/trustpilot/reviews/task_post
+    post_data[len(post_data)] = dict(domain=domain)
     response = client.post("/v3/business_data/trustpilot/reviews/task_post", post_data)
-    # you can find the full list of the response codes here https://docs.dataforseo.com/v3/appendix/errors
-    if response["status_code"] == 20000:
-        print(response)
-        # do something with result
-    else:
-        print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
 
-    st.write(response)
+    if response["status_code"] == 20000:
+        st.write("POST response:", response)
+        task_id = response["tasks"][0]["id"]
+        st.write("Task ID:", task_id)
+    else:
+        st.write(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
+        st.stop()
+
+    # Wait a few seconds before checking task status
     time.sleep(2)
 
-    # Save the task ID from the POST request response
-    task_id = response["tasks"][0]["id"]
-    st.write(task_id)
-
-        # Maximum number of retries
-    MAX_RETRIES = 10  
-    # Time to wait between retries (in seconds)
-    WAIT_TIME = 10    
-
-    # GET
+    # GET request to fetch the results of the task
+    MAX_RETRIES = 10
+    WAIT_TIME = 10
     retry_count = 0
     task_ready = False
 
     while retry_count < MAX_RETRIES and not task_ready:
         response = client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}")
-        st.write(response)
+        st.write("GET response:", response)
 
-        # Check for successful response
         if response['status_code'] == 20000:
             task_status = response['tasks'][0]['status_message']
-            
             if task_status == "Task In Queue":
-                print(f"Attempt {retry_count + 1}: Task is still in the queue. Retrying in {WAIT_TIME} seconds...")
+                st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
                 retry_count += 1
                 time.sleep(WAIT_TIME)
             else:
                 task_ready = True
         else:
-            print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
-            break
+            st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
+            st.stop()
 
-    # If the task is ready, process the results
     if task_ready:
-        results = []
-        if 'result' in response and response['result'] and len(response['result']) > 0:
-            for resultTaskInfo in response['result']:
-                if resultTaskInfo['id'] == task_id:  # Check if the task ID matches
-                    results.append(client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}"))
-        
-        print(results)
-        st.write(results)
+        # Extract and display results
+        results = response['tasks'][0].get('result', [])
+        st.write("Results:", results)
     else:
-        print("The task is not ready after maximum retries.")
+        st.write("Task not ready after maximum retries.")
+        st.stop()
+
+    # Further processing, if needed
+    # ...
+
 
 
 
