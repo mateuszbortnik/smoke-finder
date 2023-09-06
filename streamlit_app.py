@@ -16,9 +16,9 @@ if st.button('Get data'):
     response = client.post("/v3/business_data/trustpilot/reviews/task_post", post_data)
 
     if response["status_code"] == 20000:
-        st.write("POST response:", response)
+        # st.write("POST response:", response)
         task_id = response["tasks"][0]["id"]
-        st.write("Task ID:", task_id)
+        # st.write("Task ID:", task_id)
     else:
         st.write(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
         st.stop()
@@ -39,14 +39,14 @@ if st.button('Get data'):
 
         if response['status_code'] == 20000:
             task_status = response['tasks'][0]['status_message']
-            st.write(f"Task status: {task_status}")  # Debugging line
+            # st.write(f"Task status: {task_status}")  # Debugging line
             if task_status == "Task In Queue":
-                st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
+                # st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
                 retry_count += 1
                 time.sleep(WAIT_TIME)
             elif task_status == "Ok.":  # Only set task_ready = True when the task is actually complete
                 task_ready = True
-                st.write("Task is ready.")  # Debugging line
+                # st.write("Task is ready.")  # Debugging line
         else:
             st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
             break
