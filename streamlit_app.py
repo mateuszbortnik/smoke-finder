@@ -27,37 +27,29 @@ if st.button('Get data'):
     time.sleep(2)
 
     # GET request to fetch the results of the task
-    MAX_RETRIES = 100000
-    WAIT_TIME = 10
-    retry_count = 0
-    task_ready = False
+MAX_RETRIES = 10
+WAIT_TIME = 10
+retry_count = 0
+task_ready = False
 
-    while retry_count < MAX_RETRIES and not task_ready:
-        response = client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}")
-        st.write("GET response:", response)
+while retry_count < MAX_RETRIES and not task_ready:
+    st.write(f"Retry count: {retry_count}")  # Debugging line
+    response = client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}")
+    st.write("GET response:", response)
 
-        if response['status_code'] == 20000:
-            task_status = response['tasks'][0]['status_message']
-            if task_status == "Task In Queue":
-                st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
-                retry_count += 1
-                time.sleep(WAIT_TIME)
-            else:
-                task_ready = True
+    if response['status_code'] == 20000:
+        task_status = response['tasks'][0]['status_message']
+        st.write(f"Task status: {task_status}")  # Debugging line
+        if task_status == "Task In Queue":
+            st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
+            retry_count += 1
+            time.sleep(WAIT_TIME)
         else:
-            st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
-            st.stop()
-
-    if task_ready:
-        # Extract and display results
-        results = response['tasks'][0].get('result', [])
-        st.write("Results:", results)
+            task_ready = True
+            st.write("Task is ready.")  # Debugging line
     else:
-        st.write("Task not ready after maximum retries.")
-        st.stop()
-
-    # Further processing, if needed
-    # ...
+        st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
+        break
 
 
 
