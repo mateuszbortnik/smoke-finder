@@ -9,3 +9,4 @@ seaborn
 altair
 google-cloud-bigquery
 gspread
+langchain
