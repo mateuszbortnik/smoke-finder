@@ -10,3 +10,4 @@ altair
 google-cloud-bigquery
 gspread
 langchain
+langchain-experimental
