@@ -52,7 +52,7 @@ if st.button('Get data'):
             break
 
 
-
+        results=response
 
 
     #EXTRACT
