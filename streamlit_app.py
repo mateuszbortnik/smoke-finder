@@ -33,31 +33,45 @@ if st.button('Get data'):
     task_id = response["tasks"][0]["id"]
     st.write(task_id)
 
+        # Maximum number of retries
+    MAX_RETRIES = 10  
+    # Time to wait between retries (in seconds)
+    WAIT_TIME = 10    
+
     # GET
-    response = client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}")
-    st.write(response)
+    retry_count = 0
+    task_ready = False
 
-    # Check for successful response
-    if response['status_code'] == 20000:
-        results = []  # Initialize or clear the results list
+    while retry_count < MAX_RETRIES and not task_ready:
+        response = client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}")
+        st.write(response)
 
-        # Check if the task is in the queue
-        task_status = response['tasks'][0]['status_message']
-        if task_status == "Task In Queue":
-            st.write("Task is still in the queue. Please wait.")
+        # Check for successful response
+        if response['status_code'] == 20000:
+            task_status = response['tasks'][0]['status_message']
+            
+            if task_status == "Task In Queue":
+                print(f"Attempt {retry_count + 1}: Task is still in the queue. Retrying in {WAIT_TIME} seconds...")
+                retry_count += 1
+                time.sleep(WAIT_TIME)
+            else:
+                task_ready = True
         else:
-            # Safety check to ensure 'result' key exists and has data
-            if 'result' in response and response['result'] and len(response['result']) > 0:
-                for resultTaskInfo in response['result']:
-                    if resultTaskInfo['id'] == task_id:  # Check if the task ID matches
-                        results.append(client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}"))
+            print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
+            break
 
-            st.write(results)
-            # Do something with the result
+    # If the task is ready, process the results
+    if task_ready:
+        results = []
+        if 'result' in response and response['result'] and len(response['result']) > 0:
+            for resultTaskInfo in response['result']:
+                if resultTaskInfo['id'] == task_id:  # Check if the task ID matches
+                    results.append(client.get(f"/v3/business_data/trustpilot/reviews/task_get/{task_id}"))
+        
+        print(results)
+        st.write(results)
     else:
-        st.write("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
-
-    st.write(results)
+        print("The task is not ready after maximum retries.")
 
 
 
