@@ -30,3 +30,5 @@ if response["status_code"] == 20000:
     # do something with result
 else:
     print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
+
+st.write(response)
