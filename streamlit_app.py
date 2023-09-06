@@ -45,15 +45,14 @@ if st.button('Get data'):
     response = client.get("/v3/business_data/trustpilot/reviews/tasks_ready")
     # you can find the full list of the response codes here https://docs.dataforseo.com/v3/appendix/errors
     if response['status_code'] == 20000:
-        results = []  # Clear the results list
+        results = []
         tasks = response['tasks']
         if tasks:  # Check if the list is not empty
             last_task = tasks[-1]  # Get the last task
             if last_task['result'] and len(last_task['result']) > 0:
                 for resultTaskInfo in last_task['result']:
                     if resultTaskInfo['id']:
-                        single_result = client.get("/v3/business_data/trustpilot/reviews/task_get/" + resultTaskInfo['id'])
-                        results = [single_result]  # Overwrite the results list with the new result
+                        results.append(client.get("/v3/business_data/trustpilot/reviews/task_get/" + resultTaskInfo['id']))
                         
         print(results)
         # do something with result
@@ -75,7 +74,7 @@ if st.button('Get data'):
                 if isinstance(result_data, dict) and "items" in result_data:
                     items = result_data["items"]
                 elif isinstance(result_data, list) and "items" in result_data[0]:
-                    items = result_data[-1]["items"]
+                    items = result_data[0]["items"]
                 else:
                     items = []
 
