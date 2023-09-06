@@ -39,7 +39,7 @@ if st.button('Get data'):
     else:
         print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
 
-    # st.write(response)
+   
 
 
     #GET
@@ -61,7 +61,7 @@ if st.button('Get data'):
     else:
         print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
 
-
+    st.write(results)
 
 
     #EXTRACT
