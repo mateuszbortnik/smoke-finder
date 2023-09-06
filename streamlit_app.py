@@ -1,3 +1,4 @@
+import streamlit as st
 import client
 from client import RestClient
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
