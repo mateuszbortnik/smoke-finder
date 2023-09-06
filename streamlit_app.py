@@ -40,7 +40,7 @@ if st.button('Get data'):
         print("error. Code: %d Message: %s" % (response["status_code"], response["status_message"]))
 
    
-
+    time.sleep(5.5)
 
     #GET
     response = client.get("/v3/business_data/trustpilot/reviews/tasks_ready")
