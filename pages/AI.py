@@ -71,7 +71,7 @@ if uploaded_file is not None:
       llm = OpenAI(
           openai_api_key=openai_api_key, 
           temperature=0, # creative scale
-          max_tokens=300)
+          max_tokens=3000)
       db_chain = SQLDatabaseChain(llm=llm, database=db, verbose=True)
 
     # run query and display result
