@@ -55,43 +55,31 @@ if st.button('Get data'):
         
 
 
-    #EXTRACT
-    def extract_product_details_from_list(response):
+
+    # EXTRACT
+    def extract_product_details_from_response(response):
         all_products = []
 
-        for result in response:
-            tasks = result.get("tasks", [])
+        # Directly accessing the location of results based on the structure of your response
+        items = response["tasks"][0]["result"][0]["items"]
 
-            for task in tasks:
-                result_data = task.get("result", {})
-
-                if isinstance(result_data, dict) and "items" in result_data:
-                    items = result_data["items"]
-                elif isinstance(result_data, list) and "items" in result_data[0]:
-                    items = result_data[0]["items"]
-                else:
-                    items = []
-
-                for item in items:
-
-
-
-                    product_info = {
-                            "rating": item["rating"]["value"],
-                            "timestamp": item["timestamp"],
-                            "review_text": item["review_text"]
-                        }
-                    all_products.append(product_info)
+        for item in items:
+            product_info = {
+                "rating": item["rating"]["value"],
+                "timestamp": item["timestamp"],
+                "review_text": item["review_text"]
+            }
+            all_products.append(product_info)
 
         return all_products
 
     # Usage
-    products = extract_product_details_from_list(response)
+    products = extract_product_details_from_response(response)
     print(products)  # This should print the details of the first product
 
     st.success("Success!")
     df = pd.DataFrame.from_dict(products)
     df.to_csv("reviews.csv")
-    df
+    st.write(df)
 
 
