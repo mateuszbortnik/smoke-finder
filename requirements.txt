@@ -13,3 +13,4 @@ langchain
 langchain-experimental
 openai
 chromadb
+os
