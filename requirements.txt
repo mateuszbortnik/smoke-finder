@@ -12,3 +12,4 @@ gspread
 langchain
 langchain-experimental
 openai
+chromadb
