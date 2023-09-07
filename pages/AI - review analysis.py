@@ -40,4 +40,4 @@ if st.button("Let's go"):
     
     
     if st.button("Get answer"):
-        qa.run(query)
+        st.write(qa.run(query))
