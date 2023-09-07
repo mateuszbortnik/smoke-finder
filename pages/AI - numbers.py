@@ -47,7 +47,7 @@ if uploaded_file is not None:
     st.write(df)
 
     # api key
-    openai_api_key = "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"
+    openai_api_key = "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"
 
     # user query
     user_q = st.text_input(
