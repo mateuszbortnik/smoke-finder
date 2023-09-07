@@ -20,6 +20,11 @@ openai_api_key = st.text_input(
 
 os.environ["OPENAI_API_KEY"] = openai_api_key
 
+query = st.text_input(
+"User Query", 
+help="Enter a question about rviews"
+,value="What users complain about?")
+
 # read file
 uploaded_file = st.file_uploader("Choose a csv file")
 if st.button("Let's go"):
@@ -34,11 +39,9 @@ if st.button("Let's go"):
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
     docsearch = Chroma.from_documents(texts, embeddings)
     qa = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff", retriever = docsearch.as_retriever())
-    query = st.text_input(
-    "User Query", 
-    help="Enter a question about rviews")
+
     
     
     # if st.button("Get answer"):
-    a=   st.write(qa.run(query))
+    a=st.write(qa.run(query))
     st.write(a)
