@@ -18,7 +18,7 @@ os.environ["OPENAI_API_KEY"] = openai_api_key
 
 # read file
 uploaded_file = st.file_uploader("Choose a csv file")
-if st.button('Get data'):
+if st.button("Let's go"):
     # if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     st.write(df)
