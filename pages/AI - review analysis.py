@@ -14,7 +14,7 @@ import streamlit as st
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-openai_api_key = "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"
+openai_api_key = "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"
 
 os.environ["OPENAI_API_KEY"] = openai_api_key
 
