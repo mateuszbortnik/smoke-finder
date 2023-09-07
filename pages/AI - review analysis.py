@@ -11,7 +11,9 @@ import langchain
 from langchain.chains import RetrievalQA
 from langchain.chat_models import ChatOpenAI
 import streamlit as st
-
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 openai_api_key = "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"
 
 os.environ["OPENAI_API_KEY"] = openai_api_key
