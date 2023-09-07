@@ -18,19 +18,20 @@ os.environ["OPENAI_API_KEY"] = openai_api_key
 
 # read file
 uploaded_file = st.file_uploader("Choose a csv file")
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-    st.write(df)
+if st.button('Get data'):
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file)
+        st.write(df)
 
-loader = langchain.document_loaders.DataFrameLoader(df, 'review_text')
-documents = loader.load()
-text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
-texts = text_splitter.split_documents(documents)
-embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
-docsearch = Chroma.from_documents(texts, embeddings)
-qa = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff", retriever = docsearch.as_retriever())
-query = st.text_input(
-        "User Query", 
-        help="Enter a question about rviews")
+    loader = langchain.document_loaders.DataFrameLoader(df, 'review_text')
+    documents = loader.load()
+    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+    texts = text_splitter.split_documents(documents)
+    embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
+    docsearch = Chroma.from_documents(texts, embeddings)
+    qa = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff", retriever = docsearch.as_retriever())
+    query = st.text_input(
+            "User Query", 
+            help="Enter a question about rviews")
 
-qa.run(query)
+    qa.run(query)
