@@ -34,8 +34,9 @@ if st.button("Let's go"):
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
     docsearch = Chroma.from_documents(texts, embeddings)
     qa = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff", retriever = docsearch.as_retriever())
-    query = st.text_input(
-            "User Query", 
-            help="Enter a question about rviews")
+    if st.button("Get answer"):
+        query = st.text_input(
+                "User Query", 
+                help="Enter a question about rviews")
 
-    qa.run(query)
+        qa.run(query)
