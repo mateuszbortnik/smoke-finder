@@ -39,5 +39,5 @@ if st.button("Let's go"):
     help="Enter a question about rviews")
     
     
-    if st.button("Get answer"):
-        st.write(qa.run(query))
+if st.button("Get answer"):
+    st.write(qa.run(query))
