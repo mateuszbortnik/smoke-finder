@@ -12,4 +12,4 @@ gspread
 langchain
 langchain-experimental
 openai
-chromadb
+chromadb==0.3.29
