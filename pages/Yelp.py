@@ -22,7 +22,7 @@ if st.button('Get data'):
     response = client.post("/v3/business_data/yelp/reviews/task_post", post_data)
     
     if response["status_code"] == 20000:
-        st.write("POST response:", response)
+        # st.write("POST response:", response)
         task_id = response["tasks"][0]["id"]
         print("Task ID:", task_id)
     else:
@@ -42,11 +42,11 @@ if st.button('Get data'):
     while retry_count < MAX_RETRIES and not task_ready:
         # st.write(f"Retry count: {retry_count}")  # Debugging line
         response = client.get(f"/v3/business_data/yelp/reviews/task_get/{task_id}")
-        st.write("GET response:", response)
+        # st.write("GET response:", response)
 
         if response['status_code'] == 20000:
             task_status = response['tasks'][0]['status_message']
-            st.write(f"Task status: {task_status}")  # Debugging line
+            # st.write(f"Task status: {task_status}")  # Debugging line
             if task_status == "Task In Queue":
                 # st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
                 retry_count += 1
@@ -55,7 +55,7 @@ if st.button('Get data'):
                 task_ready = True
                 # st.write("Task is ready.")  # Debugging line
         else:
-            st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
+            # st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
             break
 
 
@@ -88,7 +88,7 @@ if st.button('Get data'):
     st.download_button(
         label="Press to Download",
         data=csv,
-        file_name="reviews.csv",
+        file_name="yelp-reviews.csv",
         mime="text/csv",
         key='download-csv'
     )
