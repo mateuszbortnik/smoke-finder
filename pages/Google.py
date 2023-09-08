@@ -10,14 +10,15 @@ st.title("Google reviews")
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 keyword = st.text_input('Keyword', 'Ashley Stewart')
-
+location_name = st.text_input('Location', 'United States')
+language_name = st.text_input('Language', 'English')
 
 if st.button('Get data'):
     post_data = dict()
     # simple way to set a task
     post_data[len(post_data)] = dict(
-        location_name="United States",
-        language_name="English",
+        location_name=location_name,
+        language_name=language_name,
         keyword=keyword,
         depth=100
     )
