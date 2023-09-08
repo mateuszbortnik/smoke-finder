@@ -19,7 +19,7 @@ if st.button('Get data'):
         location_name="London,England,United Kingdom",
         language_name="English",
         keyword=keyword,
-        depth=4490
+        depth=100
     )
 
     response = client.post("/v3/business_data/google/reviews/task_post", post_data)
