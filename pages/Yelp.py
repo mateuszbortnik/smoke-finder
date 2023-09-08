@@ -17,7 +17,8 @@ if st.button('Get data'):
 
     post_data[len(post_data)] = dict(
     language_name="English",
-    alias=alias)
+    alias=alias,
+    depth=4490)
 
     response = client.post("/v3/business_data/yelp/reviews/task_post", post_data)
     
