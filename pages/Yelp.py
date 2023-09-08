@@ -22,7 +22,7 @@ if st.button('Get data'):
     response = client.post("/v3/business_data/yelp/reviews/task_post", post_data)
     
     if response["status_code"] == 20000:
-        st.write("POST response:", response)
+        print("POST response:", response)
         task_id = response["tasks"][0]["id"]
         st.write("Task ID:", task_id)
     else:
