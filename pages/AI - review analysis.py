@@ -14,6 +14,10 @@ import streamlit as st
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
+
+st.title("GPT module (TEST)")
+
 openai_api_key = st.text_input(
         "API Key", 
         help="Enter Open Ai API Key")
