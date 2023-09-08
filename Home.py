@@ -6,7 +6,7 @@ import time
 
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
-st.title("🏠 Home")
+st.title("Smoke Finder💨")
 st.text("Some intro and instructions here")
 
 
