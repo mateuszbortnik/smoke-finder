@@ -85,7 +85,7 @@ if st.button('Get data'):
     st.download_button(
         label="Press to Download",
         data=csv,
-        file_name="reviews.csv",
+        file_name="trustpilot-reviews.csv",
         mime="text/csv",
         key='download-csv'
     )
