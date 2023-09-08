@@ -7,7 +7,7 @@ from langchain import OpenAI, SQLDatabase
 from langchain_experimental.sql import SQLDatabaseChain
 import openai
 
-
+st.title("GPT module (TEST)")
 #####################################
 #            FUNCTIONS              #
 #####################################
