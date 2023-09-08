@@ -57,3 +57,38 @@ if st.button('Get data'):
         else:
             st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
             break
+
+
+    # EXTRACT
+    def extract_product_details_from_response(response):
+        all_products = []
+
+        # Directly accessing the location of results based on the structure of your response
+        items = response["tasks"][0]["result"][0]["items"]
+
+        for item in items:
+            product_info = {
+                "rating": item["rating"]["value"],
+                "timestamp": item["timestamp"],
+                "review_text": item["review_text"]
+            }
+            all_products.append(product_info)
+
+        return all_products
+
+    # Usage
+    products = extract_product_details_from_response(response)
+    print(products)  # This should print the details of the first product
+
+    st.success("Success!")
+    df = pd.DataFrame.from_dict(products)
+    csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
+    st.write(df)
+
+    st.download_button(
+        label="Press to Download",
+        data=csv,
+        file_name="reviews.csv",
+        mime="text/csv",
+        key='download-csv'
+    )
