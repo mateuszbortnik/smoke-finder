@@ -35,11 +35,11 @@ if st.button('Get data'):
     while retry_count < MAX_RETRIES and not task_ready:
         # st.write(f"Retry count: {retry_count}")  # Debugging line
         response = client.get(f"/v3/business_data/tripadvisor/reviews/task_get/{task_id}")
-        st.write("GET response:", response)
+        # st.write("GET response:", response)
 
         if response['status_code'] == 20000:
             task_status = response['tasks'][0]['status_message']
-            # st.write(f"Task status: {task_status}")  # Debugging line
+            st.write(f"Task status: {task_status}")  # Debugging line
             if task_status == "Task In Queue":
                 # st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
                 retry_count += 1
