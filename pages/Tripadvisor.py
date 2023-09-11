@@ -14,7 +14,7 @@ if st.button('Get data'):
     post_data = dict()
     post_data[len(post_data)] = dict(
     url_path=url_path,
-    depth=250)
+    depth=20)
     response = client.post("/v3/business_data/tripadvisor/reviews/task_post", post_data)
 
     if response["status_code"] == 20000:
