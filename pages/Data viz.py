@@ -12,8 +12,9 @@ st.set_page_config(
 # Add Title
 st.title("Use Pygwalker In Streamlit")
  
-# Import your data
-df = pd.read_csv("https://kanaries-app.s3.ap-northeast-1.amazonaws.com/public-datasets/bike_sharing_dc.csv")
+uploaded_file = st.file_uploader("Choose a csv file")
+df = pd.read_csv(uploaded_file)
+
  
 # Generate the HTML using Pygwalker
 pyg_html = pyg.walk(df, return_html=True)
