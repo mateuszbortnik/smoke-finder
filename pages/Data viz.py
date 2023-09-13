@@ -13,9 +13,11 @@ st.set_page_config(
 st.title("Use Pygwalker In Streamlit")
  
 uploaded_file = st.file_uploader("Choose a csv file")
-df = pd.read_csv(uploaded_file)
 
- 
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+
+
 # Generate the HTML using Pygwalker
 pyg_html = pyg.walk(df, return_html=True)
  
