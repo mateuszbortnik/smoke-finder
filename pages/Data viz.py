@@ -18,8 +18,8 @@ if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
 
 
-# Generate the HTML using Pygwalker
-pyg_html = pyg.walk(df, return_html=True)
- 
-# Embed the HTML into the Streamlit app
-components.html(pyg_html, height=1000, scrolling=True)
+    # Generate the HTML using Pygwalker
+    pyg_html = pyg.walk(df, return_html=True)
+    
+    # Embed the HTML into the Streamlit app
+    components.html(pyg_html, height=1000, scrolling=True)
