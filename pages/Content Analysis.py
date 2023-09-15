@@ -10,7 +10,7 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 post_data = dict()
 # simple way to set a task
-post_data[len(post_data)] = dict(keyword="logitech")
+post_data[len(post_data)] = dict(keyword="Ashley Stewart")
 
 response = client.post("/v3/content_analysis/search/live", post_data)
 
