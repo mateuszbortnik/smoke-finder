@@ -39,7 +39,10 @@ def extract_product_details_from_response(response):
             "url": item["url"],
             "fetch_time": item["fetch_time"],
             "country": item["country"],
-            "score": item["score"]
+            "score": item["score"],
+            "content_type": item["content_info"]["content_type"],
+            "content_type": item["content_info"]["title"],
+            "content_type": item["content_info"]["snippet"]
         }
         all_products.append(product_info)
 
