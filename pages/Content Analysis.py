@@ -16,7 +16,7 @@ response = client.post("/v3/content_analysis/search/live", post_data)
 
 
 if response["status_code"] == 20000:
-    # st.write("POST response:", response)
+    st.write("POST response:", response)
     task_id = response["tasks"][0]["id"]
     print("Task ID:", task_id)
 else:
