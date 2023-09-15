@@ -42,7 +42,13 @@ def extract_product_details_from_response(response):
             "score": item["score"],
             "content_type": item["content_info"]["content_type"],
             "title": item["content_info"]["title"],
-            "snippet": item["content_info"]["snippet"]
+            "snippet": item["content_info"]["snippet"],
+            "snippet": item["content_info"]["sentiment_connotations"]["anger"],
+            "snippet": item["content_info"]["sentiment_connotations"]["happiness"],
+            "snippet": item["content_info"]["sentiment_connotations"]["love"],
+            "snippet": item["content_info"]["sentiment_connotations"]["sadness"],
+            "snippet": item["content_info"]["sentiment_connotations"]["share"],
+            "snippet": item["content_info"]["sentiment_connotations"]["fun"]
         }
         all_products.append(product_info)
 
