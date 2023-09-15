@@ -41,8 +41,8 @@ def extract_product_details_from_response(response):
             "country": item["country"],
             "score": item["score"],
             "content_type": item["content_info"]["content_type"],
-            "content_type": item["content_info"]["title"],
-            "content_type": item["content_info"]["snippet"]
+            "title": item["content_info"]["title"],
+            "snippet": item["content_info"]["snippet"]
         }
         all_products.append(product_info)
 
