@@ -48,3 +48,4 @@ def extract_product_details_from_response(response):
     # Usage
 products = extract_product_details_from_response(response)
 print(products)  # This should print the details of the first product
+df = pd.DataFrame.from_dict(products)
