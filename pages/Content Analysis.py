@@ -43,12 +43,17 @@ def extract_product_details_from_response(response):
             "content_type": item["content_info"]["content_type"],
             "title": item["content_info"]["title"],
             "snippet": item["content_info"]["snippet"],
-            "snippet": item["content_info"]["sentiment_connotations"]["anger"],
-            "snippet": item["content_info"]["sentiment_connotations"]["happiness"],
-            "snippet": item["content_info"]["sentiment_connotations"]["love"],
-            "snippet": item["content_info"]["sentiment_connotations"]["sadness"],
-            "snippet": item["content_info"]["sentiment_connotations"]["share"],
-            "snippet": item["content_info"]["sentiment_connotations"]["fun"]
+            "anger": item["content_info"]["sentiment_connotations"]["anger"],
+            "happiness": item["content_info"]["sentiment_connotations"]["happiness"],
+            "love": item["content_info"]["sentiment_connotations"]["love"],
+            "sadness": item["content_info"]["sentiment_connotations"]["sadness"],
+            "share": item["content_info"]["sentiment_connotations"]["share"],
+            "fun": item["content_info"]["sentiment_connotations"]["fun"],
+            "positive": item["content_info"]["connotation_types"]["positive"],
+            "negative": item["content_info"]["connotation_types"]["negative"],
+            "neutral": item["content_info"]["connotation_types"]["neutral"],
+            "date_published": item["content_info"]["date_published"],
+            "date_published": item["content_info"]["content_quality_score"]
         }
         all_products.append(product_info)
 
