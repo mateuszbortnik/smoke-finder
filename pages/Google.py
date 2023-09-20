@@ -3,30 +3,49 @@ import client
 from client import RestClient
 import pandas as pd
 import time
-
+import re
 
 st.title("Google reviews")
 
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
-keyword = st.text_input('Keyword', 'Ashley Stewart')
-location_name = st.text_input('Location', 'United States')
-language_name = st.text_input('Language', 'English')
+
+url = st.text_input('url', 'https://www.google.com/maps/place/Ashley+Stewart/@39.8495135,-95.0893464,6z/data=!4m10!1m2!2m1!1sashley+stewart!3m6!1s0x886b523a1ab8c599:0x61c453a9079053a5!8m2!3d39.8495135!4d-86.1245027!15sCg5hc2hsZXkgc3Rld2FydCIDiAEBWhAiDmFzaGxleSBzdGV3YXJ0kgEVd29tZW5zX2Nsb3RoaW5nX3N0b3Jl4AEA!16s%2Fg%2F1txfpx89?authuser=0&entry=ttu')
+
+def extract_cid_from_url(url):
+    # Split the URL by "0x"
+    parts = url.split("0x")
+    if len(parts) > 2:
+        # Return the portion of the second occurrence up to the "!" delimiter
+        return parts[2].split("!")[0]
+    else:
+        return None
+
+cid_hex = extract_cid_from_url(url)
+st.write(cid_hex) #debug
+
+if cid_hex:
+    cid = int(cid_hex, 16)  # Decoding the hex to int, as the CID is a number, not a UTF-8 encoded string
+    st.write(cid)#debug
+else:
+    st.write("CID not found in the provided URL")
+
+
 
 if st.button('Get data'):
     post_data = dict()
     # simple way to set a task
     post_data[len(post_data)] = dict(
-        location_name=location_name,
-        language_name=language_name,
-        keyword=keyword,
-        depth=100
+        cid=cid,
+        depth=100,
+        language_name="English",
+        location_name="United States"
     )
 
     response = client.post("/v3/business_data/google/reviews/task_post", post_data)
 
     if response["status_code"] == 20000:
-        # st.write("POST response:", response)
+        st.write("POST response:", response)
         task_id = response["tasks"][0]["id"]
         print("Task ID:", task_id)
     else:
