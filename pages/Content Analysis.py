@@ -23,7 +23,6 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
             "https://www.googleapis.com/auth/spreadsheets",
         ],
     )
-    conn = connect(credentials=credentials)
     gc = gspread.service_account_from_dict(st.secrets["gcp_service_account"])
     
     # Open the Google Sheet
@@ -36,13 +35,22 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
     # Clear existing data if any (should be empty since it's a new worksheet)
     worksheet.clear()
     
-    # Add new data
-    worksheet.insert_rows(df.values.tolist(), row=1)
+    if df.empty:
+        st.warning("The DataFrame is empty. No data to save.")
+        return
     
     # Add header
     worksheet.insert_row(df.columns.tolist(), index=1)
     
+    # Convert DataFrame to list of lists (each inner list is a row in the DataFrame)
+    values = df.values.tolist()
+    
+    # Add new data row by row
+    for i, value in enumerate(values):
+        worksheet.insert_row(value, index=i + 2)
+    
     st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
+
 st.title("Content Analysis")
 
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
