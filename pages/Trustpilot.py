@@ -5,6 +5,8 @@ import pandas as pd
 import time
 from google.oauth2 import service_account
 from gsheetsdb import connect
+import gspread
+
 
 credentials = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
@@ -21,6 +23,33 @@ def run_query(query):
 
 sheet_url = "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0"
 rows = run_query(f'SELECT * FROM "{sheet_url}"')
+
+def save_to_google_sheet(df, sheet_url, worksheet_name='Sheet1'):
+    # Connect to Google Sheets
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"],
+        scopes=[
+            "https://www.googleapis.com/auth/spreadsheets",
+        ],
+    )
+    conn = connect(credentials=credentials)
+    gc = gspread.service_account_from_dict(st.secrets["gcp_service_account"])
+
+    # Open the Google Sheet
+    sheet_id = sheet_url.split('/')[-2]
+    sh = gc.open_by_key(sheet_id)
+    worksheet = sh.worksheet(worksheet_name)
+    
+    # Clear existing data
+    worksheet.clear()
+    
+    # Add new data
+    worksheet.insert_rows(df.values.tolist(), row=1)
+    
+    # Add header
+    worksheet.insert_row(df.columns.tolist(), index=1)
+    
+    st.success(f"Data successfully saved to {worksheet_name} in the Google Sheet.")
 
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
@@ -108,5 +137,8 @@ if st.button('Get data'):
         key='download-csv'
     )
 
-
+    if st.button('Save to Google Sheets'):
+        # Save to Google Sheet
+        save_to_google_sheet(df, sheet_url)
+        st.success("Data saved to Google Sheets")
 
