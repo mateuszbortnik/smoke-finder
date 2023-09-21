@@ -16,10 +16,6 @@ credentials = service_account.Credentials.from_service_account_info(
 )
 conn = connect(credentials=credentials)
 
-def run_query(query):
-    rows = conn.execute(query, headers=1)
-    rows = rows.fetchall()
-    return rows
 
 
 
@@ -57,7 +53,7 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 st.title("Trustpilot reviews")
 domain = st.text_input('Domain', 'www.ashleystewart.com')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
-rows = run_query(f'SELECT * FROM "{sheet_url}"')
+
 new_worksheet_name = st.text_input("New worksheet name", "Trustpilot reviews")
 
 if st.button('Get data'):
