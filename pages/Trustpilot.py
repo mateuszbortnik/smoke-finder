@@ -21,8 +21,7 @@ def run_query(query):
     rows = rows.fetchall()
     return rows
 
-sheet_url = "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0"
-rows = run_query(f'SELECT * FROM "{sheet_url}"')
+
 
 def save_to_new_worksheet(df, sheet_url, worksheet_name):
     # Connect to Google Sheets
@@ -57,6 +56,9 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 st.title("Trustpilot reviews")
 domain = st.text_input('Domain', 'www.ashleystewart.com')
+sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
+rows = run_query(f'SELECT * FROM "{sheet_url}"')
+new_worksheet_name = st.text_input("New worksheet name", "Trustpilot reviews")
 
 if st.button('Get data'):
     # POST request to enqueue a task
@@ -140,5 +142,5 @@ if st.button('Get data'):
     )
 
 
-    new_worksheet_name = "MyNewWorksheet2"
+    
     save_to_new_worksheet(df, sheet_url, new_worksheet_name)
