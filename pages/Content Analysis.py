@@ -16,40 +16,36 @@ credentials = service_account.Credentials.from_service_account_info(
 conn = connect(credentials=credentials)
 
 def save_to_new_worksheet(df, sheet_url, worksheet_name):
-    # Connect to Google Sheets
-    credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"],
-        scopes=[
-            "https://www.googleapis.com/auth/spreadsheets",
-        ],
-    )
-    gc = gspread.service_account_from_dict(st.secrets["gcp_service_account"])
-    
-    # Open the Google Sheet
-    sheet_id = sheet_url.split('/')[-2]
-    sh = gc.open_by_key(sheet_id)
-    
-    # Create a new worksheet with the given name
-    worksheet = sh.add_worksheet(title=worksheet_name, rows="1000", cols="50")
-    
-    # Clear existing data if any (should be empty since it's a new worksheet)
-    worksheet.clear()
-    
-    if df.empty:
-        st.warning("The DataFrame is empty. No data to save.")
-        return
-    
-    # Add header
-    worksheet.insert_row(df.columns.tolist(), index=1)
-    
-    # Convert DataFrame to list of lists (each inner list is a row in the DataFrame)
-    values = df.values.tolist()
-    
-    # Add new data row by row
-    for i, value in enumerate(values):
-        worksheet.insert_row(value, index=i + 2)
-    
-    st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
+    try:
+        # Connect to Google Sheets
+        credentials = service_account.Credentials.from_service_account_info(
+            st.secrets["gcp_service_account"],
+            scopes=[
+                "https://www.googleapis.com/auth/spreadsheets",
+            ],
+        )
+        gc = gspread.service_account_from_dict(st.secrets["gcp_service_account"])
+
+        # Open the Google Sheet
+        sheet_id = sheet_url.split('/')[-2]
+        sh = gc.open_by_key(sheet_id)
+
+        # Create a new worksheet with the given name
+        worksheet = sh.add_worksheet(title=worksheet_name, rows="1000", cols="50")
+
+        # Clear existing data if any (should be empty since it's a new worksheet)
+        worksheet.clear()
+
+        # Add new data
+        worksheet.insert_rows(df.values.tolist(), row=1)
+
+        # Add header
+        worksheet.insert_row(df.columns.tolist(), index=1)
+        
+        st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
+        
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
 
 st.title("Content Analysis")
 
