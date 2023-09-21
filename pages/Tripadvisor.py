@@ -3,11 +3,54 @@ import client
 from client import RestClient
 import pandas as pd
 import time
+from google.oauth2 import service_account
+from gsheetsdb import connect
+import gspread
+
+credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=[
+        "https://www.googleapis.com/auth/spreadsheets",
+    ],
+)
+conn = connect(credentials=credentials)
+
+def save_to_new_worksheet(df, sheet_url, worksheet_name):
+    # Connect to Google Sheets
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"],
+        scopes=[
+            "https://www.googleapis.com/auth/spreadsheets",
+        ],
+    )
+    conn = connect(credentials=credentials)
+    gc = gspread.service_account_from_dict(st.secrets["gcp_service_account"])
+    
+    # Open the Google Sheet
+    sheet_id = sheet_url.split('/')[-2]
+    sh = gc.open_by_key(sheet_id)
+    
+    # Create a new worksheet with the given name
+    worksheet = sh.add_worksheet(title=worksheet_name, rows="1000", cols="50")
+    
+    # Clear existing data if any (should be empty since it's a new worksheet)
+    worksheet.clear()
+    
+    # Add new data
+    worksheet.insert_rows(df.values.tolist(), row=1)
+    
+    # Add header
+    worksheet.insert_row(df.columns.tolist(), index=1)
+    
+    st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
 
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 st.title("Tripadvisor reviews")
 url_path = st.text_input('url path', 'Hotel_Review-g60763-d23462501-Reviews-Margaritaville_Times_Square-New_York_City_New_York.html')
+sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
+new_worksheet_name = st.text_input("New worksheet name", "Tripadvisor reviews")
+depth = st.text_input("Max number of reviews to fetch", "20")
 
 if st.button('Get data'):
     # POST request to enqueue a task
@@ -39,7 +82,7 @@ if st.button('Get data'):
 
         if response['status_code'] == 20000:
             task_status = response['tasks'][0]['status_message']
-            st.write(f"Task status: {task_status}")  # Debugging line
+            # st.write(f"Task status: {task_status}")  # Debugging line
             if task_status == "Task In Queue":
                 # st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
                 retry_count += 1
@@ -90,5 +133,5 @@ if st.button('Get data'):
         key='download-csv'
     )
 
-
+    save_to_new_worksheet(df, sheet_url, new_worksheet_name)
 
