@@ -139,10 +139,6 @@ if st.button('Get data'):
         key='download-csv'
     )
 
-    # if st.button('Save to Google Sheets'):
-    # Save to Google Sheet
-    # save_to_google_sheet(df, sheet_url)
-        # st.success("Data saved to Google Sheets")
-    # Save to a new Google Sheet tab
-    new_worksheet_name = "MyNewWorksheet"
-    save_to_new_worksheet(df, sheet_url, new_worksheet_name)
+    if st.button('Save to Google Sheets'):
+        new_worksheet_name = "MyNewWorksheet2"
+        save_to_new_worksheet(df, sheet_url, new_worksheet_name)
