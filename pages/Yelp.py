@@ -50,7 +50,7 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 alias = st.text_input('Alias', 'ashley-stewart-hawthorne')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
-new_worksheet_name = st.text_input("New worksheet name", "Trustpilot reviews")
+new_worksheet_name = st.text_input("New worksheet name", "Yelp reviews")
 
 if st.button('Get data'):
     # POST request to enqueue a task
