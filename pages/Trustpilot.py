@@ -148,7 +148,7 @@ if st.session_state.stage == 0:
             mime="text/csv",
             key='download-csv'
         )
-if st.session_state.stage >= 1:
-    if st.button('Save to Google Sheets'):
-        new_worksheet_name = "MyNewWorksheet2"
-        save_to_new_worksheet(df, sheet_url, new_worksheet_name)
+    if st.session_state.stage >= 1:
+        if st.button('Save to Google Sheets'):
+            new_worksheet_name = "MyNewWorksheet2"
+            save_to_new_worksheet(df, sheet_url, new_worksheet_name)
