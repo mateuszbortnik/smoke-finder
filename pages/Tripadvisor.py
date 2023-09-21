@@ -18,7 +18,7 @@ if st.button('Get data'):
     if response["status_code"] == 20000:
         # st.write("POST response:", response)
         task_id = response["tasks"][0]["id"]
-        # st.write("Task ID:", task_id)
+        st.write("Task ID:", task_id)
     else:
         st.write(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
         st.stop()
