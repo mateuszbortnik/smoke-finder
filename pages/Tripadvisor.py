@@ -55,7 +55,7 @@ depth = st.text_input("Max number of reviews to fetch", "20")
 if st.button('Get data'):
     # POST request to enqueue a task
     post_data = dict()
-    post_data[len(post_data)] = dict(url_path=url_path, depth=2000)
+    post_data[len(post_data)] = dict(url_path=url_path, depth=depth)
     response = client.post("/v3/business_data/tripadvisor/reviews/task_post", post_data)
 
     if response["status_code"] == 20000:
