@@ -137,8 +137,8 @@ if st.button('Get data'):
         key='download-csv'
     )
 
-    if st.button('Save to Google Sheets'):
-        # Save to Google Sheet
-        save_to_google_sheet(df, sheet_url)
-        st.success("Data saved to Google Sheets")
+    # if st.button('Save to Google Sheets'):
+    #     # Save to Google Sheet
+    save_to_google_sheet(df, sheet_url)
+        # st.success("Data saved to Google Sheets")
 
