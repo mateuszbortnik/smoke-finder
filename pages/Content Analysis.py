@@ -17,6 +17,12 @@ conn = connect(credentials=credentials)
 
 def save_to_new_worksheet(df, sheet_url, worksheet_name):
     try:
+        # Replace NaN values with a placeholder string (you can also use df.fillna(0) to replace with zero)
+        df.fillna("NaN", inplace=True)
+
+        # Replace Inf and -Inf with placeholder strings
+        df.replace([float('inf'), float('-inf')], ["Inf", "-Inf"], inplace=True)
+
         # Connect to Google Sheets
         credentials = service_account.Credentials.from_service_account_info(
             st.secrets["gcp_service_account"],
@@ -36,16 +42,18 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
         # Clear existing data if any (should be empty since it's a new worksheet)
         worksheet.clear()
 
-        # Add new data
-        worksheet.insert_rows(df.values.tolist(), row=1)
-
         # Add header
         worksheet.insert_row(df.columns.tolist(), index=1)
+
+        # Add new data
+        for i, value in enumerate(df.values.tolist()):
+            worksheet.insert_row(value, index=i + 2)
         
         st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
         
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
 
 st.title("Content Analysis")
 
