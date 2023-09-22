@@ -48,7 +48,7 @@ def fetch_all_data_from_worksheets(sheet_url):
         
     except Exception as e:
         st.error(f"An error occurred while fetching data: {e}")
-    print(dfs)
+    st.write(dfs)
     return dfs
 
 
