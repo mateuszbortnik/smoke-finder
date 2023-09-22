@@ -12,6 +12,8 @@ st.set_page_config(page_title = 'Smoke Finder',
                     layout='wide',
                     initial_sidebar_state='collapsed')
 
+st.title("Summary")
+
 def fetch_all_data_from_worksheets(sheet_url):
     # Initialize the dictionary to hold DataFrames
     dfs = {}
@@ -62,19 +64,23 @@ sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1
 
 
 data_frames = fetch_all_data_from_worksheets(sheet_url)
-# Initialize DataFrames only if they exist in the data_frames dictionary
+
 trustpilot_reviews = data_frames.get('Trustpilot reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
-# Calculate the cumulative average of the 'rating' column
 trustpilot_reviews['cumulative_avg_rating'] = trustpilot_reviews['rating'].expanding().mean()
 trustpilot_reviews['timestamp'] = pd.to_datetime(trustpilot_reviews['timestamp']).dt.date
-# col2.line_chart(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating')
-fig = px.line(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating', line_shape="spline")
-
-
-
+trustpilot_reviews_fig = px.line(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating', line_shape="spline")
 
 yelp_reviews = data_frames.get('Yelp reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
+yelp_reviews['cumulative_avg_rating'] = yelp_reviews['rating'].expanding().mean()
+yelp_reviews['timestamp'] = pd.to_datetime(yelp_reviews['timestamp']).dt.date
+yelp_reviews_fig = px.line(yelp_reviews, x='timestamp', y='cumulative_avg_rating', line_shape="spline")
+
 google_reviews = data_frames.get('Google reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
+google_reviews['cumulative_avg_rating'] = google_reviews['rating'].expanding().mean()
+google_reviews['timestamp'] = pd.to_datetime(google_reviews['timestamp']).dt.date
+google_reviews_fig = px.line(google_reviews, x='timestamp', y='cumulative_avg_rating', line_shape="spline")
+
+
 tripadvisor_reviews = data_frames.get('Tripadvisor reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
 onpage_data = data_frames.get('OnPage data', pd.DataFrame())
 content_analysis_data = data_frames.get('Content Analysis data', pd.DataFrame())
@@ -82,4 +88,9 @@ content_analysis_data = data_frames.get('Content Analysis data', pd.DataFrame())
 st.subheader('Trustpilot reviews')
 col1, col2 = st.columns(2)
 col1.dataframe(trustpilot_reviews)
-col2.plotly_chart(fig)
+col2.plotly_chart(trustpilot_reviews_fig)
+
+st.subheader('Yelp reviews')
+col1, col2 = st.columns(2)
+col1.dataframe(trustpilot_reviews)
+col2.plotly_chart(trustpilot_reviews_fig)
