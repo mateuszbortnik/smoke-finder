@@ -80,3 +80,25 @@ else:
 
     # Wait a few seconds before checking task status
 time.sleep(2)
+
+WAIT_TIME = 10
+task_ready = False
+
+while not task_ready:
+    # st.write(f"Retry count: {retry_count}")  # Debugging line
+    response = client.get(f"/v3/business_data/tripadvisor/reviews/task_get/{task_id}")
+    st.write("GET response:", response)
+
+    if response['status_code'] == 20000:
+        task_status = response['tasks'][0]['status_message']
+        st.write(f"Task status: {task_status}")  # Debugging line
+        if task_status == "Task In Queue":
+            # st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
+            
+            time.sleep(WAIT_TIME)
+        elif task_status == "Ok.":  # Only set task_ready = True when the task is actually complete
+            task_ready = True
+            # st.write("Task is ready.")  # Debugging line
+    else:
+        st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
+        break
