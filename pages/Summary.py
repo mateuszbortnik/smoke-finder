@@ -92,5 +92,5 @@ col2.plotly_chart(trustpilot_reviews_fig)
 
 st.subheader('Yelp reviews')
 col1, col2 = st.columns(2)
-col1.dataframe(trustpilot_reviews)
-col2.plotly_chart(trustpilot_reviews_fig)
+col1.dataframe(yelp_reviews)
+col2.plotly_chart(yelp_reviews_fig)
