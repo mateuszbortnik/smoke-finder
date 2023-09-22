@@ -48,7 +48,7 @@ def fetch_all_data_from_worksheets(sheet_url):
         
     except Exception as e:
         st.error(f"An error occurred while fetching data: {e}")
-    st.write(dfs)
+    
     return dfs
 
 
@@ -56,4 +56,6 @@ sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1
 
 
 data_frames = fetch_all_data_from_worksheets(sheet_url)
-
+# Create separate DataFrames dynamically
+for df in data_frames.items():
+    st.write(df)
