@@ -63,11 +63,13 @@ col1, col2 = st.columns(2)
 data_frames = fetch_all_data_from_worksheets(sheet_url)
 # Initialize DataFrames only if they exist in the data_frames dictionary
 trustpilot_reviews = data_frames.get('Trustpilot reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
-yelp_reviews = data_frames.get('Yelp reviews', pd.DataFrame())
-google_reviews = data_frames.get('Google reviews', pd.DataFrame())
-tripadvisor_reviews = data_frames.get('Tripadvisor reviews', pd.DataFrame())
+# Calculate the cumulative average of the 'rating' column
+trustpilot_reviews['cumulative_avg_rating'] = trustpilot_reviews['rating'].expanding().mean()
+
+yelp_reviews = data_frames.get('Yelp reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
+google_reviews = data_frames.get('Google reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
+tripadvisor_reviews = data_frames.get('Tripadvisor reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
 onpage_data = data_frames.get('OnPage data', pd.DataFrame())
 content_analysis_data = data_frames.get('Content Analysis data', pd.DataFrame())
-content_analysis_data2 = data_frames.get('Content Analysis data2', pd.DataFrame())
 col1.dataframe(trustpilot_reviews)
 
