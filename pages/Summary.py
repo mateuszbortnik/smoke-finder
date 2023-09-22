@@ -66,7 +66,7 @@ trustpilot_reviews = data_frames.get('Trustpilot reviews', pd.DataFrame()).sort_
 # Calculate the cumulative average of the 'rating' column
 trustpilot_reviews['cumulative_avg_rating'] = trustpilot_reviews['rating'].expanding().mean()
 trustpilot_reviews['timestamp'] = pd.to_datetime(trustpilot_reviews['timestamp']).dt.date
-col2.line_chart(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating')
+col2.line_chart(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating', use_container_width=True)
 
 yelp_reviews = data_frames.get('Yelp reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
 google_reviews = data_frames.get('Google reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
