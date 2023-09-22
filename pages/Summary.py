@@ -85,8 +85,8 @@ tripadvisor_reviews['cumulative_avg_rating'] = tripadvisor_reviews['rating'].exp
 tripadvisor_reviews['timestamp'] = pd.to_datetime(tripadvisor_reviews['timestamp']).dt.date
 tripadvisor_reviews_fig = px.line(tripadvisor_reviews, x='timestamp', y='cumulative_avg_rating', line_shape="spline")
 
-
 onpage_data = data_frames.get('OnPage data', pd.DataFrame())
+
 content_analysis_data = data_frames.get('Content Analysis data', pd.DataFrame())
 
 st.subheader('Trustpilot reviews')
@@ -108,3 +108,11 @@ st.subheader('Tripadvisor reviews')
 col1, col2 = st.columns(2)
 col1.dataframe(tripadvisor_reviews)
 col2.plotly_chart(tripadvisor_reviews_fig)
+
+st.subheader('OnPage data')
+col1, col2 = st.columns(2)
+col1.dataframe(onpage_data)
+
+st.subheader('Content Analysis data')
+col1, col2 = st.columns(2)
+col1.dataframe(content_analysis_data)
