@@ -57,5 +57,4 @@ sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1
 
 data_frames = fetch_all_data_from_worksheets(sheet_url)
 # Create separate DataFrames dynamically
-for df in data_frames.items():
-    st.write(df)
+st.dataframe(data_frames['Trustpilot reviews'])
