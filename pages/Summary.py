@@ -68,7 +68,7 @@ trustpilot_reviews = data_frames.get('Trustpilot reviews', pd.DataFrame()).sort_
 trustpilot_reviews['cumulative_avg_rating'] = trustpilot_reviews['rating'].expanding().mean()
 trustpilot_reviews['timestamp'] = pd.to_datetime(trustpilot_reviews['timestamp']).dt.date
 # col2.line_chart(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating')
-fig = px.line(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating')
+fig = px.line(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating', line_shape="spline")
 
 
 
