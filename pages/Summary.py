@@ -99,6 +99,11 @@ col1, col2 = st.columns(2)
 col1.dataframe(yelp_reviews)
 col2.plotly_chart(yelp_reviews_fig)
 
+st.subheader('Google reviews')
+col1, col2 = st.columns(2)
+col1.dataframe(google_reviews)
+col2.plotly_chart(google_reviews_fig)
+
 st.subheader('Tripadvisor reviews')
 col1, col2 = st.columns(2)
 col1.dataframe(tripadvisor_reviews)
