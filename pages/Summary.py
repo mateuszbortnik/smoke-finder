@@ -57,4 +57,10 @@ sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1
 
 data_frames = fetch_all_data_from_worksheets(sheet_url)
 # Create separate DataFrames dynamically
-st.dataframe(data_frames['Trustpilot reviews'])
+trustpilot_reviews = data_frames['Trustpilot reviews']
+yelp_reviews = data_frames['Yelp reviews']
+google_reviews = data_frames['Google reviews']
+tripadvisor_reviews = data_frames['Tripadvisor reviews']
+onpage_data = data_frames['OnPage data']
+content_analysis_data = data_frames['Content Analysis data']
+trustpilot_reviews2 = data_frames['Trustpilot reviews2']
