@@ -68,7 +68,7 @@ post_data[len(post_data)] = dict(
         "seo api"
     ])
 
-response = client.post("/v3/content_analysis/search/live", post_data)
+response = client.post("/v3/keywords_data/google_trends/explore/task_post", post_data)
 
 if response["status_code"] == 20000:
     st.write("POST response:", response)
