@@ -80,8 +80,12 @@ google_reviews['cumulative_avg_rating'] = google_reviews['rating'].expanding().m
 google_reviews['timestamp'] = pd.to_datetime(google_reviews['timestamp']).dt.date
 google_reviews_fig = px.line(google_reviews, x='timestamp', y='cumulative_avg_rating', line_shape="spline")
 
-
 tripadvisor_reviews = data_frames.get('Tripadvisor reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
+tripadvisor_reviews['cumulative_avg_rating'] = tripadvisor_reviews['rating'].expanding().mean()
+tripadvisor_reviews['timestamp'] = pd.to_datetime(tripadvisor_reviews['timestamp']).dt.date
+tripadvisor_reviews_fig = px.line(tripadvisor_reviews, x='timestamp', y='cumulative_avg_rating', line_shape="spline")
+
+
 onpage_data = data_frames.get('OnPage data', pd.DataFrame())
 content_analysis_data = data_frames.get('Content Analysis data', pd.DataFrame())
 
@@ -94,3 +98,8 @@ st.subheader('Yelp reviews')
 col1, col2 = st.columns(2)
 col1.dataframe(yelp_reviews)
 col2.plotly_chart(yelp_reviews_fig)
+
+st.subheader('Tripadvisor reviews')
+col1, col2 = st.columns(2)
+col1.dataframe(tripadvisor_reviews)
+col2.plotly_chart(tripadvisor_reviews_fig)
