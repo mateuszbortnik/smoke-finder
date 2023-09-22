@@ -69,12 +69,16 @@ trustpilot_reviews['cumulative_avg_rating'] = trustpilot_reviews['rating'].expan
 trustpilot_reviews['timestamp'] = pd.to_datetime(trustpilot_reviews['timestamp']).dt.date
 # col2.line_chart(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating')
 fig = px.line(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating')
-col2.plotly_chart(fig)
+
+
+
 
 yelp_reviews = data_frames.get('Yelp reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
 google_reviews = data_frames.get('Google reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
 tripadvisor_reviews = data_frames.get('Tripadvisor reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
 onpage_data = data_frames.get('OnPage data', pd.DataFrame())
 content_analysis_data = data_frames.get('Content Analysis data', pd.DataFrame())
-col1.dataframe(trustpilot_reviews)
 
+st.subheader('Trustpilot reviews')
+col1.dataframe(trustpilot_reviews)
+col2.plotly_chart(fig)
