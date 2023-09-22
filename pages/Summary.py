@@ -62,7 +62,7 @@ col1, col2 = st.columns(2)
 
 data_frames = fetch_all_data_from_worksheets(sheet_url)
 # Initialize DataFrames only if they exist in the data_frames dictionary
-trustpilot_reviews = data_frames.get('Trustpilot reviews', pd.DataFrame()).sort_values(by='date', ascending=True)
+trustpilot_reviews = data_frames.get('Trustpilot reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
 yelp_reviews = data_frames.get('Yelp reviews', pd.DataFrame())
 google_reviews = data_frames.get('Google reviews', pd.DataFrame())
 tripadvisor_reviews = data_frames.get('Tripadvisor reviews', pd.DataFrame())
