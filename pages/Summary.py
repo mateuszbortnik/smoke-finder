@@ -59,7 +59,7 @@ def fetch_all_data_from_worksheets(sheet_url):
 
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
 
-col1, col2 = st.columns(2)
+
 
 data_frames = fetch_all_data_from_worksheets(sheet_url)
 # Initialize DataFrames only if they exist in the data_frames dictionary
@@ -80,5 +80,6 @@ onpage_data = data_frames.get('OnPage data', pd.DataFrame())
 content_analysis_data = data_frames.get('Content Analysis data', pd.DataFrame())
 
 st.subheader('Trustpilot reviews')
+col1, col2 = st.columns(2)
 col1.dataframe(trustpilot_reviews)
 col2.plotly_chart(fig)
