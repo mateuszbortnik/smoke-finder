@@ -66,7 +66,7 @@ data_frames = fetch_all_data_from_worksheets(sheet_url)
 trustpilot_reviews = data_frames.get('Trustpilot reviews', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
 # Calculate the cumulative average of the 'rating' column
 trustpilot_reviews['cumulative_avg_rating'] = trustpilot_reviews['rating'].expanding().mean()
-trustpilot_reviews['timestamp'] = pd.to_datetime(trustpilot_reviews['timestamp']).dt.date
+trustpilot_reviews['date'] = pd.to_datetime(trustpilot_reviews['timestamp']).dt.date
 # col2.line_chart(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating')
 fig = px.line(trustpilot_reviews, x='timestamp', y='cumulative_avg_rating')
 col2.plotly_chart(fig)
