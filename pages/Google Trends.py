@@ -86,7 +86,7 @@ task_ready = False
 
 while not task_ready:
     # st.write(f"Retry count: {retry_count}")  # Debugging line
-    response = client.get(f"/v3/business_data/tripadvisor/reviews/task_get/{task_id}")
+    response = client.get(f"/v3/keywords_data/google_trends/explore/tasks_ready{task_id}")
     st.write("GET response:", response)
 
     if response['status_code'] == 20000:
