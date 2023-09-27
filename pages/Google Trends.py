@@ -114,9 +114,9 @@ while not task_ready:
 
         for item in items:
             product_info = {
-                "date_from": item["data"]["date_from"],
-                "date_to": item["data"]["date_to"],
-                "values": item["data"]["values"]
+                "date_from": item["data"][0]["date_from"],
+                "date_to": item["data"][0]["date_to"],
+                "values": item["data"][0]["values"]
             }
             all_products.append(product_info)
 
