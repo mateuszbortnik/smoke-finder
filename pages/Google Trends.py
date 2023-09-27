@@ -130,6 +130,7 @@ while not task_ready:
 
     # st.success("Success!")
     df = pd.DataFrame.from_dict(products)
+    pd.to_numer(df["values"])
     st.write(df["values"].dtype)
     # csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
     st.write(df)
