@@ -134,6 +134,7 @@ while not task_ready:
     # st.success("Success!")
     df = pd.DataFrame.from_dict(products)
     pd.to_numeric(df["values"], errors='coerce')
+    df['values'] = df['values'].apply(lambda x: x[0] if isinstance(x, list) and x else None)
     st.write(df["values"].apply(type))
     csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
 
