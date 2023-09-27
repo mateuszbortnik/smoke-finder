@@ -122,7 +122,7 @@ while not task_ready:
         df['values'] = df['values'].apply(lambda x: x[0] if x else None)
 
         st.dataframe(df)
-
+        df
 
 
     #     for item in items:
@@ -136,7 +136,7 @@ while not task_ready:
     #     return all_products
 
     # # # Usage
-    # products = extract_product_details_from_response(response)
+    products = extract_product_details_from_response(response)
     # print(products)  # This should print the details of the first product
 
     # st.success("Success!")
