@@ -133,7 +133,7 @@ while not task_ready:
 
     # st.success("Success!")
     df = pd.DataFrame.from_dict(products)
-    pd.to_numeric(df["values"], errors='coerce')
+    # pd.to_numeric(df["values"], errors='coerce')
     st.write(df["values"].dtype)
     csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
     # csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
