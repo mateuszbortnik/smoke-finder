@@ -134,9 +134,9 @@ while not task_ready:
     # st.success("Success!")
     df = pd.DataFrame.from_dict(products)
     pd.to_numeric(df["values"], errors='coerce')
-    # st.write(df["values"].dtype)
+    df["values"].apply(type)
     csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
-    # csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
+
     st.write(df)
     
     st.download_button(
