@@ -89,7 +89,7 @@ onpage_data = data_frames.get('OnPage data', pd.DataFrame())
 
 content_analysis_data = data_frames.get('Content Analysis data', pd.DataFrame())
 
-google_trends = data_frames.get('Google trends', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
+google_trends = data_frames.get('Google trends', pd.DataFrame()).sort_values(by='date_from', ascending=True)
 google_trends_fig = px.line(google_trends, x='date_from', y='values', line_shape="spline")
 
 
