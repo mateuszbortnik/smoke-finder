@@ -59,7 +59,7 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 st.title("Google Trends")
 
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
-new_worksheet_name = st.text_input("New worksheet name", "Tripadvisor reviews")
+new_worksheet_name = st.text_input("New worksheet name", "Google trends")
 
 # post_data = dict()
 # # simple way to set a task
@@ -142,7 +142,7 @@ while not task_ready:
     st.download_button(
         label="Press to Download",
         data=csv,
-        file_name="tripadvisor-reviews.csv",
+        file_name="google-trends.csv",
         mime="text/csv",
         key='download-csv'
     )
