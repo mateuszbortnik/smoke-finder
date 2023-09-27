@@ -62,10 +62,11 @@ post_data = dict()
 # simple way to set a task
 post_data[len(post_data)] = dict(
     location_name="United States",
-    date_from="2022-01-01",
+    date_from="2022-12-01",
     date_to="2023-01-01",
     keywords=[
-        "seo api"
+        "ashley stewart",
+        "plus size dresses"
     ])
 
 response = client.post("/v3/keywords_data/google_trends/explore/task_post", post_data)
