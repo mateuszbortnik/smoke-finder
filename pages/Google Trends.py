@@ -119,7 +119,7 @@ while not task_ready:
         df = pd.DataFrame(items)
 
         # Extract only the first value from the 'values' list (Assuming it's a single-item list)
-        df['values'] = df['values'].apply(lambda x: x[0] if x else None)
+        # df['values'] = df['values'].apply(lambda x: x[0] if x else None)
 
         st.dataframe(df)
         df
