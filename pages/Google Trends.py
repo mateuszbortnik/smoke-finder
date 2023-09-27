@@ -114,13 +114,13 @@ while not task_ready:
         st.write("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
         st.write(items)
 
-        # for item in items:
-        product_info = {
-                "date_from": items[0]["date_from"]
-                # "date_to": item["data"][0]["date_to"],
-                # "values": item["data"][0]["values"]
-            }
-        all_products.append(product_info)
+        for item in items:
+            product_info = {
+                    "date_from": item["date_from"]
+                    # "date_to": item["data"][0]["date_to"],
+                    # "values": item["data"][0]["values"]
+                }
+            all_products.append(product_info)
 
         return all_products
 
@@ -129,6 +129,6 @@ while not task_ready:
     print(products)  # This should print the details of the first product
 
     # st.success("Success!")
-    # df = pd.DataFrame.from_dict(products)
+    df = pd.DataFrame.from_dict(products)
     # csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
     # st.write(df)
