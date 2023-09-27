@@ -110,7 +110,7 @@ while not task_ready:
         all_products = []
 
         # Directly accessing the location of results based on the structure of your response
-        items = response["tasks"][0]["result"][0]["items"]
+        items = response["tasks"][0]["result"][0]["items"][0]
         st.write("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
         st.write(items)
 
