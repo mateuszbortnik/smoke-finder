@@ -116,7 +116,7 @@ while not task_ready:
 
         # for item in items:
         product_info = {
-                "date_from": item[0]["date_from"]
+                "date_from": items[0]["date_from"]
                 # "date_to": item["data"][0]["date_to"],
                 # "values": item["data"][0]["values"]
             }
