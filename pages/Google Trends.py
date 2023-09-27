@@ -111,6 +111,7 @@ while not task_ready:
 
         # Directly accessing the location of results based on the structure of your response
         items = response["tasks"][0]["result"][0]["items"]
+        st.wrtie("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
         st.write(items)
 
     #     for item in items:
