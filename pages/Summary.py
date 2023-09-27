@@ -89,6 +89,10 @@ onpage_data = data_frames.get('OnPage data', pd.DataFrame())
 
 content_analysis_data = data_frames.get('Content Analysis data', pd.DataFrame())
 
+google_trends = data_frames.get('Google trends', pd.DataFrame()).sort_values(by='timestamp', ascending=True)
+google_trends_fig = px.line(google_trends, x='date_from', y='values', line_shape="spline")
+
+
 st.subheader('Trustpilot reviews')
 col1, col2 = st.columns(2)
 col1.dataframe(trustpilot_reviews)
@@ -108,6 +112,12 @@ st.subheader('Tripadvisor reviews')
 col1, col2 = st.columns(2)
 col1.dataframe(tripadvisor_reviews)
 col2.plotly_chart(tripadvisor_reviews_fig)
+
+st.subheader('Google trends')
+col1, col2 = st.columns(2)
+col1.dataframe(google_trends)
+col2.plotly_chart(google_trends_fig)
+
 
 st.subheader('OnPage data')
 col1, col2 = st.columns(2)
