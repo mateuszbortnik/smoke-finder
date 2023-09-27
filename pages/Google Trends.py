@@ -104,28 +104,28 @@ while not task_ready:
         break
 
 
-# EXTRACT
-    def extract_product_details_from_response(response):
-        all_products = []
+# # EXTRACT
+#     def extract_product_details_from_response(response):
+#         all_products = []
 
-        # Directly accessing the location of results based on the structure of your response
-        items = response["tasks"][0]["result"][0]["items"]
+#         # Directly accessing the location of results based on the structure of your response
+#         items = response["tasks"][0]["result"][0]["items"]
 
-        for item in items:
-            product_info = {
-                "date_from": item["data"]["date_from"],
-                "date_to": item["data"]["date_to"],
-                "values": item["data"]["values"]
-            }
-            all_products.append(product_info)
+#         for item in items:
+#             product_info = {
+#                 "date_from": item["data"]["date_from"],
+#                 "date_to": item["data"]["date_to"],
+#                 "values": item["data"]["values"]
+#             }
+#             all_products.append(product_info)
 
-        return all_products
+#         return all_products
 
-    # Usage
-    products = extract_product_details_from_response(response)
-    print(products)  # This should print the details of the first product
+#     # Usage
+#     products = extract_product_details_from_response(response)
+#     print(products)  # This should print the details of the first product
 
-    st.success("Success!")
-    df = pd.DataFrame.from_dict(products)
-    csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
-    st.write(df)
+#     st.success("Success!")
+#     df = pd.DataFrame.from_dict(products)
+#     csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
+#     st.write(df)
