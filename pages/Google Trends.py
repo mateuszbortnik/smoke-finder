@@ -58,6 +58,9 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 st.title("Google Trends")
 
+sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
+new_worksheet_name = st.text_input("New worksheet name", "Tripadvisor reviews")
+
 # post_data = dict()
 # # simple way to set a task
 # post_data[len(post_data)] = dict(
@@ -111,8 +114,8 @@ while not task_ready:
 
         # Directly accessing the location of results based on the structure of your response
         items = response["tasks"][0]["result"][0]["items"][0]["data"]
-        st.write("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
-        st.write(items)
+        # st.write("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
+        # st.write(items)
 
         for item in items:
             product_info = {
@@ -132,5 +135,16 @@ while not task_ready:
     df = pd.DataFrame.from_dict(products)
     pd.to_numeric(df["values"], errors='coerce')
     st.write(df["values"].dtype)
+    csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
     # csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
     st.write(df)
+    
+    st.download_button(
+        label="Press to Download",
+        data=csv,
+        file_name="tripadvisor-reviews.csv",
+        mime="text/csv",
+        key='download-csv'
+    )
+
+    save_to_new_worksheet(df, sheet_url, new_worksheet_name)
