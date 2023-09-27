@@ -18,7 +18,7 @@ conn = connect(credentials=credentials)
 def save_to_new_worksheet(df, sheet_url, worksheet_name):
     try:
         # Replace NaN values with a placeholder string (you can also use df.fillna(0) to replace with zero)
-        df.fillna("NaN", inplace=True)
+        # df.fillna("NaN", inplace=True)
 
         # Replace Inf and -Inf with placeholder strings
         df.replace([float('inf'), float('-inf')], ["Inf", "-Inf"], inplace=True)
