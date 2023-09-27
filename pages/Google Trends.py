@@ -60,93 +60,93 @@ st.title("Google Trends")
 
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
 new_worksheet_name = st.text_input("New worksheet name", "Google trends")
+if st.button('Get data'):
+    # post_data = dict()
+    # # simple way to set a task
+    # post_data[len(post_data)] = dict(
+    #     location_name="United States",
+    #     date_from="2019-01-01",
+    #     date_to="2020-01-01",
+    #     keywords=[
+    #         "seo api"
+    #     ]
+    # )
 
-# post_data = dict()
-# # simple way to set a task
-# post_data[len(post_data)] = dict(
-#     location_name="United States",
-#     date_from="2019-01-01",
-#     date_to="2020-01-01",
-#     keywords=[
-#         "seo api"
-#     ]
-# )
+    # response = client.post("/v3/keywords_data/google_trends/explore/task_post", post_data)
 
-# response = client.post("/v3/keywords_data/google_trends/explore/task_post", post_data)
+    # if response["status_code"] == 20000:
+    #     st.write("POST response:", response)
+    #     task_id = response["tasks"][0]["id"]
+    #     print("Task ID:", task_id)
+    # else:
+    #     print(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
+    #     st.stop()
 
-# if response["status_code"] == 20000:
-#     st.write("POST response:", response)
-#     task_id = response["tasks"][0]["id"]
-#     print("Task ID:", task_id)
-# else:
-#     print(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
-#     st.stop()
+    #     # Wait a few seconds before checking task status
+    # time.sleep(2)
 
-#     # Wait a few seconds before checking task status
-# time.sleep(2)
+    WAIT_TIME = 10
+    task_ready = False
+    task_id='09271218-6487-0170-0000-bb7e2fe0ff5d'
+    while not task_ready:
+        # st.write(f"Retry count: {retry_count}")  # Debugging line
+        response = client.get(f"/v3/keywords_data/google_trends/explore/task_get/{task_id}")
+        st.write("GET response:", response)
 
-WAIT_TIME = 10
-task_ready = False
-task_id='09271218-6487-0170-0000-bb7e2fe0ff5d'
-while not task_ready:
-    # st.write(f"Retry count: {retry_count}")  # Debugging line
-    response = client.get(f"/v3/keywords_data/google_trends/explore/task_get/{task_id}")
-    st.write("GET response:", response)
-
-    if response['status_code'] == 20000:
-        task_status = response['tasks'][0]['status_message']
-        st.write(f"Task status: {task_status}")  # Debugging line
-        if task_status == "Task In Queue":
-            # st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
-            
-            time.sleep(WAIT_TIME)
-        elif task_status == "Ok.":  # Only set task_ready = True when the task is actually complete
-            task_ready = True
-            # st.write("Task is ready.")  # Debugging line
-    else:
-        st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
-        break
+        if response['status_code'] == 20000:
+            task_status = response['tasks'][0]['status_message']
+            st.write(f"Task status: {task_status}")  # Debugging line
+            if task_status == "Task In Queue":
+                # st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
+                
+                time.sleep(WAIT_TIME)
+            elif task_status == "Ok.":  # Only set task_ready = True when the task is actually complete
+                task_ready = True
+                # st.write("Task is ready.")  # Debugging line
+        else:
+            st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
+            break
 
 
-# EXTRACT
-    def extract_product_details_from_response(response):
-        all_products = []
+    # EXTRACT
+        def extract_product_details_from_response(response):
+            all_products = []
 
-        # Directly accessing the location of results based on the structure of your response
-        items = response["tasks"][0]["result"][0]["items"][0]["data"]
-        # st.write("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
-        # st.write(items)
+            # Directly accessing the location of results based on the structure of your response
+            items = response["tasks"][0]["result"][0]["items"][0]["data"]
+            # st.write("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
+            # st.write(items)
 
-        for item in items:
-            product_info = {
-                    "date_from": item["date_from"],
-                    "date_to": item["date_to"],
-                    "values": item["values"]
-                }
-            all_products.append(product_info)
+            for item in items:
+                product_info = {
+                        "date_from": item["date_from"],
+                        "date_to": item["date_to"],
+                        "values": item["values"]
+                    }
+                all_products.append(product_info)
 
-        return all_products
+            return all_products
 
-    # # Usage
-    products = extract_product_details_from_response(response)
-    print(products)  # This should print the details of the first product
+        # # Usage
+        products = extract_product_details_from_response(response)
+        print(products)  # This should print the details of the first product
 
-    # st.success("Success!")
-    df = pd.DataFrame.from_dict(products)
-    pd.to_numeric(df["values"], errors='coerce')
-    df['values'] = df['values'].apply(lambda x: x[0] if isinstance(x, list) and x else None)
-    df['values'].fillna('N/A', inplace=True)
-    # st.write(df["values"].apply(type))
-    csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
+        # st.success("Success!")
+        df = pd.DataFrame.from_dict(products)
+        pd.to_numeric(df["values"], errors='coerce')
+        df['values'] = df['values'].apply(lambda x: x[0] if isinstance(x, list) and x else None)
+        df['values'].fillna('N/A', inplace=True)
+        # st.write(df["values"].apply(type))
+        csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
 
-    st.write(df)
-    
-    st.download_button(
-        label="Press to Download",
-        data=csv,
-        file_name="google-trends.csv",
-        mime="text/csv",
-        key='download-csv'
-    )
+        st.write(df)
+        
+        st.download_button(
+            label="Press to Download",
+            data=csv,
+            file_name="google-trends.csv",
+            mime="text/csv",
+            key='download-csv'
+        )
 
-    save_to_new_worksheet(df, sheet_url, new_worksheet_name)
+        save_to_new_worksheet(df, sheet_url, new_worksheet_name)
