@@ -114,19 +114,30 @@ while not task_ready:
         st.write("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
         st.write(items)
 
-        for item in items:
-            product_info = {
-                "date_from": item["data"][0]["date_from"],
-                "date_to": item[0]["data"][0]["date_from"],
-                "values": item[0]["data"][0]["values"][0]
-            }
-            all_products.append(product_info)
 
-        return all_products
+        # Converting the data structure into a Pandas DataFrame
+        df = pd.DataFrame(items)
 
-    # # Usage
-    products = extract_product_details_from_response(response)
-    print(products)  # This should print the details of the first product
+        # Extract only the first value from the 'values' list (Assuming it's a single-item list)
+        df['values'] = df['values'].apply(lambda x: x[0] if x else None)
+
+        st.dataframe(df)
+
+
+
+    #     for item in items:
+    #         product_info = {
+    #             "date_from": item["data"][0]["date_from"],
+    #             "date_to": item[0]["data"][0]["date_from"],
+    #             "values": item[0]["data"][0]["values"][0]
+    #         }
+    #         all_products.append(product_info)
+
+    #     return all_products
+
+    # # # Usage
+    # products = extract_product_details_from_response(response)
+    # print(products)  # This should print the details of the first product
 
     # st.success("Success!")
     # df = pd.DataFrame.from_dict(products)
