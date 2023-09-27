@@ -110,19 +110,19 @@ while not task_ready:
         all_products = []
 
         # Directly accessing the location of results based on the structure of your response
-        items = response["tasks"][0]["result"][0]["items"][0]["data"][0]["date_from"]
+        items = response["tasks"][0]["result"][0]["items"][0]["data"]
         st.write("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
         st.write(items)
 
-    #     for item in items:
-    #         product_info = {
-    #             "date_from": item["data"][0]["date_from"],
-    #             "date_to": item["data"][0]["date_to"],
-    #             "values": item["data"][0]["values"]
-    #         }
-    #         all_products.append(product_info)
+        # for item in items:
+        product_info = {
+                "date_from": item[0]["date_from"]
+                # "date_to": item["data"][0]["date_to"],
+                # "values": item["data"][0]["values"]
+            }
+        all_products.append(product_info)
 
-    #     return all_products
+        return all_products
 
     # # Usage
     products = extract_product_details_from_response(response)
