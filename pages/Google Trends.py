@@ -79,7 +79,7 @@ if st.button('Get data'):
         location_name=location_name,
         date_from=date_from,
         date_to=date_to,
-        keywords=keywords
+        keywords=["plus size dresses"]
     )
 
     response = client.post("/v3/keywords_data/google_trends/explore/task_post", post_data)
