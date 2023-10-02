@@ -119,44 +119,44 @@ if st.button('Get data'):
 
 
     # EXTRACT
-        def extract_product_details_from_response(response):
-            all_products = []
+    def extract_product_details_from_response(response):
+        all_products = []
 
-            # Directly accessing the location of results based on the structure of your response
-            items = response["tasks"][0]["result"][0]["items"][0]["data"]
-            # st.write("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
-            # st.write(items)
+        # Directly accessing the location of results based on the structure of your response
+        items = response["tasks"][0]["result"][0]["items"][0]["data"]
+        # st.write("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
+        # st.write(items)
 
-            for item in items:
-                product_info = {
-                        "date_from": item["date_from"],
-                        "date_to": item["date_to"],
-                        "values": item["values"]
-                    }
-                all_products.append(product_info)
+        for item in items:
+            product_info = {
+                    "date_from": item["date_from"],
+                    "date_to": item["date_to"],
+                    "values": item["values"]
+                }
+            all_products.append(product_info)
 
-            return all_products
+        return all_products
 
-        # # Usage
-        products = extract_product_details_from_response(response)
-        print(products)  # This should print the details of the first product
+    # # Usage
+    products = extract_product_details_from_response(response)
+    print(products)  # This should print the details of the first product
 
-        # st.success("Success!")
-        df = pd.DataFrame.from_dict(products)
-        pd.to_numeric(df["values"], errors='coerce')
-        df['values'] = df['values'].apply(lambda x: x[0] if isinstance(x, list) and x else None)
-        df['values'].fillna('N/A', inplace=True)
-        # st.write(df["values"].apply(type))
-        csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
+    # st.success("Success!")
+    df = pd.DataFrame.from_dict(products)
+    pd.to_numeric(df["values"], errors='coerce')
+    df['values'] = df['values'].apply(lambda x: x[0] if isinstance(x, list) and x else None)
+    df['values'].fillna('N/A', inplace=True)
+    # st.write(df["values"].apply(type))
+    csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
 
-        st.write(df)
-        
-        st.download_button(
-            label="Press to Download",
-            data=csv,
-            file_name="google-trends.csv",
-            mime="text/csv",
-            key='download-csv'
-        )
+    st.write(df)
+    
+    st.download_button(
+        label="Press to Download",
+        data=csv,
+        file_name="google-trends.csv",
+        mime="text/csv",
+        key='download-csv'
+    )
 
-        save_to_new_worksheet(df, sheet_url, new_worksheet_name)
+    save_to_new_worksheet(df, sheet_url, new_worksheet_name)
