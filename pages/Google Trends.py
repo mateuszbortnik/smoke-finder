@@ -60,8 +60,8 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 st.title("Google Trends")
 
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
-date_from = st.date_input('Date from', datetime.date(2019, 1, 1))
-date_to = st.date_input('Date to', datetime.date(2020, 1, 1))
+date_from = st.date_input('Date from', "2019-01-01")
+date_to = st.date_input('Date to', "2020-01-01")
 new_worksheet_name = st.text_input("New worksheet name", "Google trends")
 location_name = st.text_input("Location name", "United States")
 keyword1 = st.text_input("Keyword", "seo api", key=1)
@@ -79,7 +79,7 @@ if st.button('Get data'):
         location_name=location_name,
         date_from=date_from,
         date_to=date_to,
-        keywords=["plus size dresses"]
+        keywords=keywords
     )
 
     response = client.post("/v3/keywords_data/google_trends/explore/task_post", post_data)
