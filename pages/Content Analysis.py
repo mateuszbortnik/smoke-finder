@@ -122,7 +122,7 @@ if st.button('Get data'):
         df = pd.DataFrame.from_dict(products)
         st.dataframe(df)
         csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
-        status.update(label="Data extracted!", state="complete")
+        status.update(label="Data extracted!", state="complete", expanded=True)
 
     st.download_button(
         label="Press to Download",
