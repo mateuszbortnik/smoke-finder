@@ -95,7 +95,7 @@ if st.button('Get data'):
 
             # Wait a few seconds before checking task status
         time.sleep(2)
-    with st.status("Waiting for the task"):
+    with st.status("Waiting for the task") as status:
         WAIT_TIME = 10
         task_ready = False
         # task_id='09271218-6487-0170-0000-bb7e2fe0ff5d'
@@ -114,6 +114,7 @@ if st.button('Get data'):
                 elif task_status == "Ok.":  # Only set task_ready = True when the task is actually complete
                     task_ready = True
                     st.write("Task is ready.")
+                    status.update(label="Task ready!", state="complete")
             else:
                 st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
                 break
