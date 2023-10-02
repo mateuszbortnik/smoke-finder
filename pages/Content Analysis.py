@@ -64,22 +64,24 @@ sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1
 new_worksheet_name = st.text_input("New worksheet name", "Content Analysis data")
 
 if st.button('Get data'):
-    post_data = dict()
-    # simple way to set a task
-    post_data[len(post_data)] = dict(keyword=keyword)
+    with st.status("Sending a POST request...") as status:
+        post_data = dict()
+        # simple way to set a task
+        post_data[len(post_data)] = dict(keyword=keyword)
 
-    response = client.post("/v3/content_analysis/search/live", post_data)
+        response = client.post("/v3/content_analysis/search/live", post_data)
 
-    if response["status_code"] == 20000:
-        # st.write("POST response:", response)
-        task_id = response["tasks"][0]["id"]
-        print("Task ID:", task_id)
-    else:
-        print(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
-        st.stop()
+        if response["status_code"] == 20000:
+            # st.write("POST response:", response)
+            task_id = response["tasks"][0]["id"]
+            print("Task ID:", task_id)
+            status.update(label="Task ready!", state="complete")
+        else:
+            print(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
+            st.stop()
 
-        # Wait a few seconds before checking task status
-    time.sleep(2)
+            # Wait a few seconds before checking task status
+        time.sleep(2)
 
 
         # EXTRACT
@@ -114,7 +116,7 @@ if st.button('Get data'):
 
         return all_products
 
-        # Usage
+    # Usage
     products = extract_product_details_from_response(response)
     print(products)  # This should print the details of the first product
     df = pd.DataFrame.from_dict(products)
