@@ -73,7 +73,7 @@ keyword5 = st.text_input("Keyword", "seo api", key=5)
 keywords = [keyword1, keyword2, keyword3, keyword4, keyword5]
 
 if st.button('Get data'):
-    with st.status("Sending a POST request...", expanded=True):
+    with st.status("Sending a POST request..."):
         post_data = dict()
         # simple way to set a task
         post_data[len(post_data)] = dict(
@@ -95,7 +95,7 @@ if st.button('Get data'):
 
             # Wait a few seconds before checking task status
         time.sleep(2)
-    with st.status("Waiting for the task", expanded=True):
+    with st.status("Waiting for the task"):
         WAIT_TIME = 10
         task_ready = False
         # task_id='09271218-6487-0170-0000-bb7e2fe0ff5d'
@@ -112,8 +112,9 @@ if st.button('Get data'):
                     
                     time.sleep(WAIT_TIME)
                 elif task_status == "Ok.":  # Only set task_ready = True when the task is actually complete
-                    task_ready = True
-                    # st.write("Task is ready.")  # Debugging line
+                    with st.status("Task is ready."):
+                        task_ready = True
+                        # st.write("Task is ready.")  # Debugging line
             else:
                 st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
                 break
