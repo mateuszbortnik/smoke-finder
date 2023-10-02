@@ -112,9 +112,8 @@ if st.button('Get data'):
                     
                     time.sleep(WAIT_TIME)
                 elif task_status == "Ok.":  # Only set task_ready = True when the task is actually complete
-                    with st.status("Task is ready."):
-                        task_ready = True
-                        # st.write("Task is ready.")  # Debugging line
+                    task_ready = True
+                    st.write("Task is ready.")
             else:
                 st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
                 break
