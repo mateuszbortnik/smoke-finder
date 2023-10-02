@@ -106,7 +106,7 @@ if st.button('Get data'):
         if response['status_code'] == 20000:
             task_status = response['tasks'][0]['status_message']
             st.write(f"Task status: {task_status}")  # Debugging line
-            if task_status is not "Ok.":
+            if task_status != "Ok.":
                 # st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
                 
                 time.sleep(WAIT_TIME)
