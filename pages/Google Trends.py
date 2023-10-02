@@ -64,11 +64,11 @@ date_from = st.date_input('Date from', datetime.date(2019, 1, 1))
 date_to = st.date_input('Date to', datetime.date(2020, 1, 1))
 new_worksheet_name = st.text_input("New worksheet name", "Google trends")
 location_name = st.text_input("Location name", "United States")
-keyword1 = st.text_input("Keyword", "seo api")
-keyword2 = st.text_input("Keyword", "seo api")
-keyword3 = st.text_input("Keyword", "seo api")
-keyword4 = st.text_input("Keyword", "seo api")
-keyword5 = st.text_input("Keyword", "seo api")
+keyword1 = st.text_input("Keyword", "seo api", key=1)
+keyword2 = st.text_input("Keyword", "seo api", key=2)
+keyword3 = st.text_input("Keyword", "seo api", key=3)
+keyword4 = st.text_input("Keyword", "seo api", key=4)
+keyword5 = st.text_input("Keyword", "seo api", key=5)
 
 keywords = [keyword1, keyword2, keyword3, keyword4, keyword5]
 
