@@ -6,6 +6,7 @@ import time
 from google.oauth2 import service_account
 from gsheetsdb import connect
 import gspread
+import datetime
 
 credentials = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
@@ -59,35 +60,44 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 st.title("Google Trends")
 
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
+date_from = st.date_input('Date from', datetime.date(2019, 1, 1))
+date_to = st.date_input('Date to', datetime.date(2020, 1, 1))
 new_worksheet_name = st.text_input("New worksheet name", "Google trends")
+location_name = st.text_input("Location name", "United States")
+keyword1 = st.text_input("Keyword", "seo api")
+keyword2 = st.text_input("Keyword", "seo api")
+keyword3 = st.text_input("Keyword", "seo api")
+keyword4 = st.text_input("Keyword", "seo api")
+keyword5 = st.text_input("Keyword", "seo api")
+
+keywords = [keyword1, keyword2, keyword3, keyword4, keyword5]
+
 if st.button('Get data'):
-    # post_data = dict()
-    # # simple way to set a task
-    # post_data[len(post_data)] = dict(
-    #     location_name="United States",
-    #     date_from="2019-01-01",
-    #     date_to="2020-01-01",
-    #     keywords=[
-    #         "seo api"
-    #     ]
-    # )
+    post_data = dict()
+    # simple way to set a task
+    post_data[len(post_data)] = dict(
+        location_name=location_name,
+        date_from=date_from,
+        date_to=date_to,
+        keywords=keywords
+    )
 
-    # response = client.post("/v3/keywords_data/google_trends/explore/task_post", post_data)
+    response = client.post("/v3/keywords_data/google_trends/explore/task_post", post_data)
 
-    # if response["status_code"] == 20000:
-    #     st.write("POST response:", response)
-    #     task_id = response["tasks"][0]["id"]
-    #     print("Task ID:", task_id)
-    # else:
-    #     print(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
-    #     st.stop()
+    if response["status_code"] == 20000:
+        st.write("POST response:", response)
+        task_id = response["tasks"][0]["id"]
+        print("Task ID:", task_id)
+    else:
+        print(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
+        st.stop()
 
-    #     # Wait a few seconds before checking task status
-    # time.sleep(2)
+        # Wait a few seconds before checking task status
+    time.sleep(2)
 
     WAIT_TIME = 10
     task_ready = False
-    task_id='09271218-6487-0170-0000-bb7e2fe0ff5d'
+    # task_id='09271218-6487-0170-0000-bb7e2fe0ff5d'
     while not task_ready:
         # st.write(f"Retry count: {retry_count}")  # Debugging line
         response = client.get(f"/v3/keywords_data/google_trends/explore/task_get/{task_id}")
