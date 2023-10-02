@@ -73,49 +73,50 @@ keyword5 = st.text_input("Keyword", "seo api", key=5)
 keywords = [keyword1, keyword2, keyword3, keyword4, keyword5]
 
 if st.button('Get data'):
-    post_data = dict()
-    # simple way to set a task
-    post_data[len(post_data)] = dict(
-        location_name=location_name,
-        date_from=date_from,
-        date_to=date_to,
-        keywords=keywords
-    )
+    with st.status("Sending a POST request...", expanded=True):
+        post_data = dict()
+        # simple way to set a task
+        post_data[len(post_data)] = dict(
+            location_name=location_name,
+            date_from=date_from,
+            date_to=date_to,
+            keywords=keywords
+        )
 
-    response = client.post("/v3/keywords_data/google_trends/explore/task_post", post_data)
+        response = client.post("/v3/keywords_data/google_trends/explore/task_post", post_data)
 
-    if response["status_code"] == 20000:
-        st.write("POST response:", response)
-        task_id = response["tasks"][0]["id"]
-        print("Task ID:", task_id)
-    else:
-        print(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
-        st.stop()
-
-        # Wait a few seconds before checking task status
-    time.sleep(2)
-
-    WAIT_TIME = 10
-    task_ready = False
-    # task_id='09271218-6487-0170-0000-bb7e2fe0ff5d'
-    while not task_ready:
-        # st.write(f"Retry count: {retry_count}")  # Debugging line
-        response = client.get(f"/v3/keywords_data/google_trends/explore/task_get/{task_id}")
-        st.write("GET response:", response)
-
-        if response['status_code'] == 20000:
-            task_status = response['tasks'][0]['status_message']
-            st.write(f"Task status: {task_status}")  # Debugging line
-            if task_status != "Ok.":
-                # st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
-                
-                time.sleep(WAIT_TIME)
-            elif task_status == "Ok.":  # Only set task_ready = True when the task is actually complete
-                task_ready = True
-                # st.write("Task is ready.")  # Debugging line
+        if response["status_code"] == 20000:
+            st.write("POST response:", response)
+            task_id = response["tasks"][0]["id"]
+            print("Task ID:", task_id)
         else:
-            st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
-            break
+            print(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
+            st.stop()
+
+            # Wait a few seconds before checking task status
+        time.sleep(2)
+    with st.status("Waiting for the task", expanded=True):
+        WAIT_TIME = 10
+        task_ready = False
+        # task_id='09271218-6487-0170-0000-bb7e2fe0ff5d'
+        while not task_ready:
+            # st.write(f"Retry count: {retry_count}")  # Debugging line
+            response = client.get(f"/v3/keywords_data/google_trends/explore/task_get/{task_id}")
+            st.write("GET response:", response)
+
+            if response['status_code'] == 20000:
+                task_status = response['tasks'][0]['status_message']
+                st.write(f"Task status: {task_status}")  # Debugging line
+                if task_status != "Ok.":
+                    # st.write(f"Attempt {retry_count + 1}: Task is still in queue. Retrying in {WAIT_TIME} seconds...")
+                    
+                    time.sleep(WAIT_TIME)
+                elif task_status == "Ok.":  # Only set task_ready = True when the task is actually complete
+                    task_ready = True
+                    # st.write("Task is ready.")  # Debugging line
+            else:
+                st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
+                break
 
 
     # EXTRACT
