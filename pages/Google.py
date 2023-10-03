@@ -90,9 +90,9 @@ if st.button('Get data'):
         response = client.post("/v3/business_data/google/reviews/task_post", post_data)
 
         if response["status_code"] == 20000:
-            # st.write("POST response:", response)
+            st.write("POST response:", response)
             task_id = response["tasks"][0]["id"]
-            print("Task ID:", task_id)
+            # print("Task ID:", task_id)
         else:
             print(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
             st.stop()
@@ -127,33 +127,34 @@ if st.button('Get data'):
                 st.write(f"GET error. Code: {response['status_code']} Message: {response['status_message']}")
                 break
 
+    with st.status("Extracting data...") as status:
+        # EXTRACT
+        def extract_product_details_from_response(response):
+            all_products = []
 
-    # EXTRACT
-    def extract_product_details_from_response(response):
-        all_products = []
+            # Directly accessing the location of results based on the structure of your response
+            items = response["tasks"][0]["result"][0]["items"]
 
-        # Directly accessing the location of results based on the structure of your response
-        items = response["tasks"][0]["result"][0]["items"]
+            for item in items:
+                product_info = {
+                    "rating": item["rating"]["value"],
+                    "timestamp": item["timestamp"],
+                    "review_text": item["review_text"]
+                }
+                all_products.append(product_info)
 
-        for item in items:
-            product_info = {
-                "rating": item["rating"]["value"],
-                "timestamp": item["timestamp"],
-                "review_text": item["review_text"]
-            }
-            all_products.append(product_info)
+            return all_products
 
-        return all_products
+        # Usage
+        products = extract_product_details_from_response(response)
+        print(products)  # This should print the details of the first product
 
-    # Usage
-    products = extract_product_details_from_response(response)
-    print(products)  # This should print the details of the first product
-
-    st.success("Success!")
-    df = pd.DataFrame.from_dict(products)
-    csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
-    st.write(df)
-
+        st.success("Success!")
+        df = pd.DataFrame.from_dict(products)
+        csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
+        st.write(df)
+        status.update(label="Data extracted!", state="complete", expanded=True)
+        
     st.download_button(
         label="Press to Download",
         data=csv,
