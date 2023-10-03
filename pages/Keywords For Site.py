@@ -76,3 +76,50 @@ if st.button('Get data'):
 
             # Wait a few seconds before checking task status
         time.sleep(2)
+
+# EXTRACT
+def extract_product_details_from_response(response):
+    all_products = []
+
+    # Directly accessing the location of results based on the structure of your response
+    items = response["tasks"][0]["result"]
+    print(items)
+
+    for item in items:
+        product_info = {
+            "keyword": item["keyword"],
+            "location_code": item["location_code"],
+            "language_code": item["language_code"],
+            "search_partners": item["search_partners"],
+            "competition": item["competition"],
+            "competition_index": item["competition_index"],
+            "search_volume": item["search_volume"],
+            "low_top_of_page_bid": item["low_top_of_page_bid"],
+            "high_top_of_page_bid": item["high_top_of_page_bid"]
+            # "type": item["keyword_annotations"]["concepts"][1]["concept_group"]["type"]
+
+
+        }
+        # Adding the 'concept_name' and 'concept_type' based on the new rule
+        concepts = item.get("keyword_annotations", {}).get("concepts", [])
+        for concept in concepts:
+            concept_type = concept.get("concept_group", {}).get("type", None)
+            if concept_type in ["NON_BRAND", "BRAND"]:
+                product_info["concept_name"] = concept.get("name", None)
+                product_info["concept_type"] = concept_type
+                break  # Exit the loop once a matching concept is found
+
+        all_products.append(product_info)
+        
+
+    return all_products
+
+# Usage
+products = extract_product_details_from_response(response)
+print(products)  # This should print the details of the first product
+
+st.success("Success!")
+df = pd.DataFrame.from_dict(products)
+csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
+st.write(df)
+status.update(label="Data extracted!", state="complete", expanded=True)
