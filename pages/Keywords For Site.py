@@ -123,3 +123,13 @@ df = pd.DataFrame.from_dict(products)
 csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
 st.write(df)
 status.update(label="Data extracted!", state="complete", expanded=True)
+
+st.download_button(
+    label="Press to Download",
+    data=csv,
+    file_name="google-reviews.csv",
+    mime="text/csv",
+    key='download-csv'
+)
+
+save_to_new_worksheet(df, sheet_url, new_worksheet_name)
