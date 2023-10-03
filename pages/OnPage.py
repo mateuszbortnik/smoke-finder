@@ -88,7 +88,7 @@ if st.button('Get data'):
         while not task_ready or not crawl_ready:
             # st.write(f"Retry count: {retry_count}")  # Debugging line
             response = client.get(f"/v3/on_page/summary/{task_id}")
-            # st.write("GET response:", response)
+            st.write("GET response:", response)
 
             if response['status_code'] == 20000:
                 task_status = response['tasks'][0]['status_message']
@@ -145,7 +145,7 @@ if st.button('Get data'):
         csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
         st.write(df)
         status.update(label="Data extracted!", state="complete", expanded=True)
-        
+
     st.download_button(
         label="Press to Download",
         data=csv,
