@@ -89,27 +89,27 @@ if st.button('Get data'):
 
             for item in items:
                 product_info = {
-                    "keyword": item["keyword"]
-                    # "location_code": item["location_code"],
-                    # "language_code": item["language_code"],
-                    # "search_partners": item["search_partners"],
-                    # "competition": item["competition"],
-                    # "competition_index": item["competition_index"],
-                    # "search_volume": item["search_volume"],
-                    # "low_top_of_page_bid": item["low_top_of_page_bid"],
-                    # "high_top_of_page_bid": item["high_top_of_page_bid"]
+                    "keyword": item["keyword"],
+                    "location_code": item["location_code"],
+                    "language_code": item["language_code"],
+                    "search_partners": item["search_partners"],
+                    "competition": item["competition"],
+                    "competition_index": item["competition_index"],
+                    "search_volume": item["search_volume"],
+                    "low_top_of_page_bid": item["low_top_of_page_bid"],
+                    "high_top_of_page_bid": item["high_top_of_page_bid"]
                     # "type": item["keyword_annotations"]["concepts"][1]["concept_group"]["type"]
 
 
                 }
-                # # Adding the 'concept_name' and 'concept_type' based on the new rule
-                # concepts = item.get("keyword_annotations", {}).get("concepts", [])
-                # for concept in concepts:
-                #     concept_type = concept.get("concept_group", {}).get("type", None)
-                #     if concept_type in ["NON_BRAND", "BRAND"]:
-                #         product_info["concept_name"] = concept.get("name", None)
-                #         product_info["concept_type"] = concept_type
-                #         break  # Exit the loop once a matching concept is found
+                # Adding the 'concept_name' and 'concept_type' based on the new rule
+                concepts = item.get("keyword_annotations", {}).get("concepts", [])
+                for concept in concepts:
+                    concept_type = concept.get("concept_group", {}).get("type", None)
+                    if concept_type in ["NON_BRAND", "BRAND"]:
+                        product_info["concept_name"] = concept.get("name", None)
+                        product_info["concept_type"] = concept_type
+                        break  # Exit the loop once a matching concept is found
 
                 all_products.append(product_info)
                 
