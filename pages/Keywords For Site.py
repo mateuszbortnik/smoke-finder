@@ -92,7 +92,7 @@ if st.button('Get data'):
                     "keyword": item["keyword"],
                     "location_code": item["location_code"],
                     "language_code": item["language_code"],
-                    # "search_partners": item["search_partners"],
+                    "search_partners": item["search_partners"],
                     # "competition": item["competition"],
                     # "competition_index": item["competition_index"],
                     # "search_volume": item["search_volume"],
