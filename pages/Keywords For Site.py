@@ -90,11 +90,11 @@ if st.button('Get data'):
             for item in items:
                 product_info = {
                     "keyword": item["keyword"],
-                    "location_code": item["location_code"],
-                    "language_code": item["language_code"],
+                    "location_code": type(item["location_code"]),
+                    "language_code": type(item["language_code"]),
                     "search_partners": item["search_partners"],
                     "competition": item["competition"],
-                    "competition_index": float(item["competition_index"]),
+                    "competition_index": str(item["competition_index"]),
                     # "search_volume": item["search_volume"],
                     # "low_top_of_page_bid": item["low_top_of_page_bid"],
                     # "high_top_of_page_bid": item["high_top_of_page_bid"]
