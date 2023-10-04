@@ -94,7 +94,7 @@ if st.button('Get data'):
                     "language_code": item["language_code"],
                     "search_partners": item["search_partners"],
                     "competition": item["competition"],
-                    # "competition_index": item["competition_index"],
+                    "competition_index": item["competition_index"],
                     # "search_volume": item["search_volume"],
                     # "low_top_of_page_bid": item["low_top_of_page_bid"],
                     # "high_top_of_page_bid": item["high_top_of_page_bid"]
