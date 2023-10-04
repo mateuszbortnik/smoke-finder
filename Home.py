@@ -17,5 +17,8 @@ know immediately.
 '''
 st.markdown(txt)
 
-
+st.header("Roadmap")
+st.markdown("1. Retreive reviews data from Yelp, Trustpilot, Google, Tripadvisor and Yelp")
+st.markdown("2. Reconstruct reports similar to those in Ahrefs/Semrush")
+st.markdown("3. Build a summary page that will visalize the data from all sources and draw insights with GPT model")
 
