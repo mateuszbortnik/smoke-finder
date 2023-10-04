@@ -48,7 +48,9 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 st.title("OnPage")
-st.text("")
+st.markdown('''Using this function, you can get the overall information on a website as well as drill down into exact on-page issues of a website that has been scanned. As a result, you will know what functions to use for receiving detailed data for each of the found issues.
+            
+Fields descriptions and more: https://docs.dataforseo.com/v3/on_page/summary/?python            ''')
 
 target = st.text_input('Target', 'ashleystewart.com')
 max_crawl_pages = st.text_input('Max crawl pages', '10')
