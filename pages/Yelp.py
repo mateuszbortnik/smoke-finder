@@ -46,6 +46,11 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
 
 st.title("Yelp reviews")
 
+st.markdown('''This endpoint provides reviews published on the Yelp platform. The results are specific to the selected alias and language parameters.
+            
+Fields descriptions and more: https://docs.dataforseo.com/v3/business_data/yelp/reviews/task_post/?python
+                            https://docs.dataforseo.com/v3/business_data/yelp/reviews/task_get/?python   ''')
+
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 alias = st.text_input('Alias', 'ashley-stewart-hawthorne')
