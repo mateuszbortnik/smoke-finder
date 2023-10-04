@@ -47,6 +47,12 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 st.title("Tripadvisor reviews")
+
+st.markdown('''This endpoint provides results from the “Reviews” element on the Tripadvisor platform. The results are specific to the URL path or keyword you indicate, and and the selected location
+            
+Fields descriptions and more: https://docs.dataforseo.com/v3/business_data/tripadvisor/reviews/task_post/?python
+                            https://docs.dataforseo.com/v3/business_data/tripadvisor/reviews/task_get/?python   ''')
+
 url_path = st.text_input('url path', 'Hotel_Review-g60763-d23462501-Reviews-Margaritaville_Times_Square-New_York_City_New_York.html')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
 new_worksheet_name = st.text_input("New worksheet name", "Tripadvisor reviews")
