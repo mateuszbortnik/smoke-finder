@@ -63,8 +63,8 @@ if st.button('Get data'):
         post_data = dict()
         # simple way to set a task
         post_data[len(post_data)] = dict(
-        location_name="United States",
-        target="ashleystewart.com")
+        location_name=location_name,
+        target=target)
 
         response = client.post("/v3/keywords_data/google_ads/keywords_for_site/live", post_data)
 
