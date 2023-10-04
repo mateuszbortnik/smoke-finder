@@ -51,9 +51,14 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 st.title("Trustpilot reviews")
+
+st.markdown('''This endpoint provides reviews published on the Trustpilot platform for the local establishment specified in the domain field.
+            
+Fields descriptions and more: https://docs.dataforseo.com/v3/business_data/trustpilot/reviews/task_post/?python
+                            https://docs.dataforseo.com/v3/business_data/trustpilot/reviews/task_get/?python   ''')
+
 domain = st.text_input('Domain', 'www.ashleystewart.com')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
-
 new_worksheet_name = st.text_input("New worksheet name", "Trustpilot reviews")
 
 if st.button('Get data'):
