@@ -56,7 +56,10 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
 
 
 st.title("Content Analysis")
+st.markdown('''This endpoint will provide you with detailed citation data available for the target keyword.
 
+            
+Fields descriptions and more: https://docs.dataforseo.com/v3/content_analysis/search/live/?python          ''')
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 keyword = st.text_input('Keyword', 'Ashley Stewart')
