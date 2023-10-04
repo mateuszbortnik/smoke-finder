@@ -58,6 +58,10 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 st.title("Google Trends")
+st.markdown('''This endpoint will provide you with the keyword popularity data from the ‘Explore’ feature of Google Trends. You can check keyword trends for Google Search, Google News, Google Images, Google Shopping, and YouTube.
+            
+Fields descriptions and more: https://docs.dataforseo.com/v3/keywords_data/google_trends/explore/task_post/?python
+                            https://docs.dataforseo.com/v3/keywords_data/google_trends/explore/task_get/?python            ''')
 
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
 date_from = st.date_input('Date from', datetime.date(2019, 1, 1)).strftime('%Y-%m-%d')
