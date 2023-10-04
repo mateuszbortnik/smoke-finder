@@ -50,7 +50,7 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
 st.title("Google Ads keywords for site")
 st.markdown('''This endpoint will provide you with a list of keywords relevant to the specified domain along with their bids, search volumes for the last month, search volume trends for the last year (for estimating search volume dynamics), and competition levels.
             
-            Fields descriptions and more: https://docs.dataforseo.com/v3/keywords_data/google_ads/keywords_for_site/live/?bash            ''')
+Fields descriptions and more: https://docs.dataforseo.com/v3/keywords_data/google_ads/keywords_for_site/live/?bash            ''')
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 target = st.text_input('Target domain', 'ashleystewart.com')
