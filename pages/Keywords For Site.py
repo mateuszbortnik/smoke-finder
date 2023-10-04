@@ -48,7 +48,7 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
 
 
 st.title("Google Ads keywords for site")
-
+st.markdown("This endpoint will provide you with a list of keywords relevant to the specified domain along with their bids, search volumes for the last month, search volume trends for the last year (for estimating search volume dynamics), and competition levels.")
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 target = st.text_input('Target domain', 'ashleystewart.com')
@@ -102,14 +102,7 @@ if st.button('Get data'):
 
 
                 }
-                # Adding the 'concept_name' and 'concept_type' based on the new rule
-                # concepts = item.get("keyword_annotations", {}).get("concepts", [])
-                # for concept in concepts:
-                #     concept_type = concept.get("concept_group", {}).get("type", None)
-                #     if concept_type in ["NON_BRAND", "BRAND"]:
-                #         product_info["concept_name"] = concept.get("name", None)
-                #         product_info["concept_type"] = concept_type
-                #         break  # Exit the loop once a matching concept is found
+
 
                 all_products.append(product_info)
                 
@@ -129,7 +122,7 @@ if st.button('Get data'):
     st.download_button(
         label="Press to Download",
         data=csv,
-        file_name="google-reviews.csv",
+        file_name="google-ads-keywords.csv",
         mime="text/csv",
         key='download-csv'
     )
