@@ -96,8 +96,8 @@ if st.button('Get data'):
                     "competition": item["competition"],
                     "competition_index": str(item["competition_index"]),
                     "search_volume": item["search_volume"],
-                    "low_top_of_page_bid": int(item["low_top_of_page_bid"]),
-                    "high_top_of_page_bid": int(item["high_top_of_page_bid"])
+                    "low_top_of_page_bid": str(item["low_top_of_page_bid"]),
+                    "high_top_of_page_bid": str(item["high_top_of_page_bid"])
                     # "type": item["keyword_annotations"]["concepts"][1]["concept_group"]["type"]
 
 
