@@ -19,7 +19,7 @@ st.markdown(txt)
 
 st.header("Roadmap")
 st.markdown("1. Retreive reviews data from Yelp, Trustpilot, Google, Tripadvisor and Yelp and save them to Google Sheets")
-st.text(":green[Done]")
+st.markdown(":green[Done]")
 st.markdown("2. Reconstruct reports similar to those in Ahrefs/Semrush")
 st.text("In progress")
 st.markdown("3. Build a summary page that will visualize the data from all sources and draw insights with GPT model")
