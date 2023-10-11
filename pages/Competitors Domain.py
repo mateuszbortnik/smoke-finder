@@ -94,7 +94,7 @@ if st.button('Get data'):
 
             # Usage
         products = extract_product_details_from_response(response)
-        # print(products)  # This should print the details of the first product
+
 
         st.success("Success!")
         df = pd.DataFrame.from_dict(products)
@@ -105,9 +105,9 @@ if st.button('Get data'):
     st.download_button(
         label="Press to Download",
         data=csv,
-        file_name="google-ads-keywords.csv",
+        file_name="competitors-domain.csv",
         mime="text/csv",
         key='download-csv'
     )
-    # st.write(df.values.tolist())
+
     save_to_new_worksheet(df, sheet_url, new_worksheet_name)
