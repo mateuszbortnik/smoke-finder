@@ -94,7 +94,7 @@ if st.button('Get data'):
 
             # Usage
         products = extract_product_details_from_response(response)
-        print(products)  # This should print the details of the first product
+        # print(products)  # This should print the details of the first product
 
         st.success("Success!")
         df = pd.DataFrame.from_dict(products)
@@ -109,5 +109,5 @@ if st.button('Get data'):
         mime="text/csv",
         key='download-csv'
     )
-    st.write(df.values.tolist())
+    # st.write(df.values.tolist())
     save_to_new_worksheet(df, sheet_url, new_worksheet_name)
