@@ -40,7 +40,7 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
     
     # Add new data
     df=df.fillna('')
-    worksheet.insert_rows(df.values.tolist(), row=1)
+    worksheet.insert_rows(df.values.tolist(), row=1, value_input_option='USER_ENTERED')
     
     # Add header
     worksheet.insert_row(df.columns.tolist(), index=1)
