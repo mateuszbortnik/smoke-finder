@@ -7,6 +7,7 @@ import re
 from google.oauth2 import service_account
 from gsheetsdb import connect
 import gspread
+from pandas.io.json import json_normalize
 
 credentials = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
@@ -81,3 +82,32 @@ if st.button('Get data'):
 
             # Wait a few seconds before checking task status
         time.sleep(2)
+
+    with st.status("Extracting data...") as status:
+    # EXTRACT
+        def extract_product_details_from_response(response):
+            items_data = response['tasks'][0]['result'][0]['items']
+            df_items = json_normalize(items_data)
+            return df_items
+                        
+
+
+            # Usage
+        products = extract_product_details_from_response(response)
+        print(products)  # This should print the details of the first product
+
+        st.success("Success!")
+        df = pd.DataFrame.from_dict(products)
+        csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
+        st.write(df)
+        status.update(label="Data extracted!", state="complete", expanded=True)
+
+    st.download_button(
+        label="Press to Download",
+        data=csv,
+        file_name="google-ads-keywords.csv",
+        mime="text/csv",
+        key='download-csv'
+    )
+    st.write(df.values.tolist())
+    save_to_new_worksheet(df, sheet_url, new_worksheet_name)
