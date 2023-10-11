@@ -33,7 +33,7 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
     sh = gc.open_by_key(sheet_id)
     
     # Create a new worksheet with the given name
-    worksheet = sh.add_worksheet(title=worksheet_name, rows="10000", cols="50")
+    worksheet = sh.add_worksheet(title=worksheet_name, rows="10000", cols="500")
     
     # Clear existing data if any (should be empty since it's a new worksheet)
     worksheet.clear()
