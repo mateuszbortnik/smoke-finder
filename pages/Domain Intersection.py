@@ -48,14 +48,14 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
     st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
 
 
-st.title("Competitors Domain")
+st.title("Domain Intersection")
 st.markdown('''This endpoint will provide you with a full overview of ranking and traffic data of the competitor domains from organic and paid search. In addition to that, you will get the metrics specific to the keywords both competitor domains and your domain rank for within the same SERP.
             
 Fields descriptions and more: https://docs.dataforseo.com/v3/dataforseo_labs/google/competitors_domain/live/?python           ''')
 client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
-target1 = st.text_input('Target domain', 'ashleystewart.com', key='target1')
-target2 = st.text_input('Target domain', 'ashleystewart.com', key='target2')
+target1 = st.text_input('Target domain 1', 'ashleystewart.com', key='target1')
+target2 = st.text_input('Target domain 2', 'ashleystewart.com', key='target2')
 location_name = st.text_input('Location name', 'United States')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
 new_worksheet_name = st.text_input("New worksheet name", "Domain Intersection")
