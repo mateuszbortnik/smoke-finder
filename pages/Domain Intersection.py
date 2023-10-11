@@ -39,7 +39,7 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
     worksheet.clear()
     
     # Add new data
-
+    df=df.fillna('')
     worksheet.insert_rows(df.values.tolist(), row=1)
     
     # Add header
