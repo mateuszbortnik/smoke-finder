@@ -7,7 +7,7 @@ import re
 from google.oauth2 import service_account
 from gsheetsdb import connect
 import gspread
-from pandas.io.json import json_normalize
+from pandas import json_normalize
 
 credentials = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
