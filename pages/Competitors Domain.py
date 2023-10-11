@@ -57,7 +57,7 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 target = st.text_input('Target domain', 'ashleystewart.com')
 location_name = st.text_input('Location name', 'United States')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
-new_worksheet_name = st.text_input("New worksheet name", "Keywords for site")
+new_worksheet_name = st.text_input("New worksheet name", "Competitors Domain")
 
 if st.button('Get data'):
     with st.status("Sending a POST request...") as status:
