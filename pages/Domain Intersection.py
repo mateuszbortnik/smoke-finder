@@ -104,6 +104,7 @@ if st.button('Get data'):
         df = df.loc[:, ~df.columns.isin(['keyword_data.keyword_info.monthly_searches'])]
         csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
         st.write(df)
+        st.write(df.dtypes)
         status.update(label="Data extracted!", state="complete", expanded=True)
 
     st.download_button(
