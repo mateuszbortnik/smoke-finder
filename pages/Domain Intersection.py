@@ -47,9 +47,7 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
         # Add header
         worksheet.insert_row(df.columns.tolist(), index=1)
 
-        problematic_value = df.iloc[0, 13]
-        st.write("Problematic Value:", problematic_value)
-        st.write("Data Type:", type(problematic_value))
+
         
         st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
     except Exception as e:
@@ -108,7 +106,12 @@ if st.button('Get data'):
 
         st.success("Success!")
         df = pd.DataFrame.from_dict(products)
-        df = df.loc[:, ~df.columns.isin(['keyword_data.keyword_info.monthly_searches', 'keyword_data.keyword_info.categories', 'first_domain_serp_element.extended_snippet'])]
+        # df = df.loc[:, ~df.columns.isin(['keyword_data.keyword_info.monthly_searches', 'keyword_data.keyword_info.categories', 'first_domain_serp_element.extended_snippet'])]
+        
+        problematic_value = df.iloc[0, 13]
+        st.write("Problematic Value:", problematic_value)
+        st.write("Data Type:", type(problematic_value))
+        
         csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
         st.write(df)
         st.write(df.dtypes)
