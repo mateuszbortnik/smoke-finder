@@ -108,7 +108,7 @@ if st.button('Get data'):
 
         st.success("Success!")
         df = pd.DataFrame.from_dict(products)
-        # df = df.loc[:, ~df.columns.isin(['keyword_data.keyword_info.monthly_searches'])]
+        df = df.loc[:, ~df.columns.isin(['keyword_data.keyword_info.monthly_searches', 'keyword_data.keyword_info.categories'])]
         csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
         st.write(df)
         st.write(df.dtypes)
