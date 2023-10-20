@@ -46,6 +46,10 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
         
         # Add header
         worksheet.insert_row(df.columns.tolist(), index=1)
+
+        problematic_value = df.iloc[0, 13]
+        st.write("Problematic Value:", problematic_value)
+        st.write("Data Type:", type(problematic_value))
         
         st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
     except Exception as e:
