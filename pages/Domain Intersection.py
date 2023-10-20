@@ -25,28 +25,31 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
             "https://www.googleapis.com/auth/spreadsheets",
         ],
     )
-    conn = connect(credentials=credentials)
-    gc = gspread.service_account_from_dict(st.secrets["gcp_service_account"])
-    
-    # Open the Google Sheet
-    sheet_id = sheet_url.split('/')[-2]
-    sh = gc.open_by_key(sheet_id)
-    
-    # Create a new worksheet with the given name
-    worksheet = sh.add_worksheet(title=worksheet_name, rows="10000", cols="500")
-    
-    # Clear existing data if any (should be empty since it's a new worksheet)
-    worksheet.clear()
-    
-    # Add new data
-    df=df.fillna('')
-    worksheet.insert_rows(df.values.tolist(), row=1, value_input_option='USER_ENTERED')
-    
-    # Add header
-    worksheet.insert_row(df.columns.tolist(), index=1)
-    
-    st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
 
+    try:
+        conn = connect(credentials=credentials)
+        gc = gspread.service_account_from_dict(st.secrets["gcp_service_account"])
+        
+        # Open the Google Sheet
+        sheet_id = sheet_url.split('/')[-2]
+        sh = gc.open_by_key(sheet_id)
+        
+        # Create a new worksheet with the given name
+        worksheet = sh.add_worksheet(title=worksheet_name, rows="10000", cols="500")
+        
+        # Clear existing data if any (should be empty since it's a new worksheet)
+        worksheet.clear()
+        
+        # Add new data
+        df=df.fillna('')
+        worksheet.insert_rows(df.values.tolist(), row=1, value_input_option='USER_ENTERED')
+        
+        # Add header
+        worksheet.insert_row(df.columns.tolist(), index=1)
+        
+        st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
 
 st.title("Domain Intersection")
 st.markdown('''This endpoint will provide you with the keywords for which both specified domains rank within the same SERP. You will get search volume, competition, cost-per-click and impressions data on each intersecting keyword. Along with that, you will get data on the first and second domain’s SERP element discovered for this keyword, as well as the estimated traffic volume and cost of ad traffic. Domain Intersection endpoint supports organic, paid, local pack, and featured snippet results.
