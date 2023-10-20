@@ -108,9 +108,16 @@ if st.button('Get data'):
         df = pd.DataFrame.from_dict(products)
         # df = df.loc[:, ~df.columns.isin(['keyword_data.keyword_info.monthly_searches', 'keyword_data.keyword_info.categories', 'first_domain_serp_element.extended_snippet'])]
         
-        problematic_value = df.iloc[0, 13]
-        st.write("Problematic Value:", problematic_value)
-        st.write("Data Type:", type(problematic_value))
+        # Iterate through each cell in the DataFrame
+        for col in df.columns:
+            for index in df.index:
+                cell_value = df.at[index, col]
+                
+                # Check if the cell value is a list
+                if isinstance(cell_value, list):
+                    # Convert the list to a string and update the cell
+                    df.at[index, col] = ', '.join(map(str, cell_value))
+
         
         csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
         st.write(df)
