@@ -121,9 +121,9 @@ if st.button('Get data'):
         
         csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
         st.write(df)
-        df2 = json_normalize(df['keyword_data.keyword_info.monthly_searches'])
+
         status.update(label="Data extracted!", state="complete", expanded=True)
-        st.write(df2)
+
     st.download_button(
         label="Press to Download",
         data=csv,
