@@ -27,27 +27,26 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
     )
     conn = connect(credentials=credentials)
     gc = gspread.service_account_from_dict(st.secrets["gcp_service_account"])
-    try:
-        # Open the Google Sheet
-        sheet_id = sheet_url.split('/')[-2]
-        sh = gc.open_by_key(sheet_id)
-        
-        # Create a new worksheet with the given name
-        worksheet = sh.add_worksheet(title=worksheet_name, rows="10000", cols="50")
-        
-        # Clear existing data if any (should be empty since it's a new worksheet)
-        worksheet.clear()
-        
-        # Add new data
+    
+    # Open the Google Sheet
+    sheet_id = sheet_url.split('/')[-2]
+    sh = gc.open_by_key(sheet_id)
+    
+    # Create a new worksheet with the given name
+    worksheet = sh.add_worksheet(title=worksheet_name, rows="10000", cols="50")
+    
+    # Clear existing data if any (should be empty since it's a new worksheet)
+    worksheet.clear()
+    
+    # Add new data
 
-        worksheet.insert_rows(df.values.tolist(), row=1)
-        
-        # Add header
-        worksheet.insert_row(df.columns.tolist(), index=1)
-        
-        st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
+    worksheet.insert_rows(df.values.tolist(), row=1)
+    
+    # Add header
+    worksheet.insert_row(df.columns.tolist(), index=1)
+    
+    st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
+
 
 st.title("Google Ads keywords for site")
 st.markdown('''This endpoint will provide you with a list of keywords relevant to the specified domain along with their bids, search volumes for the last month, search volume trends for the last year (for estimating search volume dynamics), and competition levels.
@@ -83,41 +82,35 @@ if st.button('Get data'):
         time.sleep(2)
 
     with st.status("Extracting data...") as status:
+    # EXTRACT
         def extract_product_details_from_response(response):
-            items_data = response["tasks"][0]["result"]
-            df_items = json_normalize(items_data)
-            return df_items
+            all_products = []
+
+            # Directly accessing the location of results based on the structure of your response
+            items = response["tasks"][0]["result"]
+            print(items)
+
+            for item in items:
+                product_info = {
+                    "keyword": item["keyword"],
+                    "location_code": (item["location_code"]),
+                    "language_code": (item["language_code"]),
+                    "search_partners": item["search_partners"],
+                    "competition": item["competition"],
+                    "competition_index": str(item["competition_index"]),
+                    "search_volume": item["search_volume"],
+                    "low_top_of_page_bid": str(item["low_top_of_page_bid"]),
+                    "high_top_of_page_bid": str(item["high_top_of_page_bid"]),
+                    # "type": str(item["keyword_annotations"]["concepts"][0]["concept_group"]["type"])
 
 
-    # # EXTRACT
-    #     def extract_product_details_from_response(response):
-    #         all_products = []
-
-    #         # Directly accessing the location of results based on the structure of your response
-    #         items = response["tasks"][0]["result"]
-    #         print(items)
-
-    #         for item in items:
-    #             product_info = {
-    #                 "keyword": item["keyword"],
-    #                 "location_code": (item["location_code"]),
-    #                 "language_code": (item["language_code"]),
-    #                 "search_partners": item["search_partners"],
-    #                 "competition": item["competition"],
-    #                 "competition_index": str(item["competition_index"]),
-    #                 "search_volume": item["search_volume"],
-    #                 "low_top_of_page_bid": str(item["low_top_of_page_bid"]),
-    #                 "high_top_of_page_bid": str(item["high_top_of_page_bid"]),
-    #                 "type": str(item["keyword_annotations"]["concepts"][0]["concept_group"]["type"])
+                }
 
 
-    #             }
-
-
-    #             all_products.append(product_info)
+                all_products.append(product_info)
                 
 
-    #         return all_products
+            return all_products
 
             # Usage
         products = extract_product_details_from_response(response)
@@ -125,19 +118,6 @@ if st.button('Get data'):
 
         st.success("Success!")
         df = pd.DataFrame.from_dict(products)
-
-        # Iterate through each cell in the DataFrame
-        for col in df.columns:
-            for index in df.index:
-                cell_value = df.at[index, col]
-                
-                # Check if the cell value is a list
-                if isinstance(cell_value, list):
-                    # Convert the list to a string and update the cell
-                    df.at[index, col] = ', '.join(map(str, cell_value))
-
-
-
         csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
         st.write(df)
         status.update(label="Data extracted!", state="complete", expanded=True)
