@@ -83,7 +83,7 @@ if st.button('Get data'):
 
     with st.status("Extracting data...") as status:
         def extract_product_details_from_response(response):
-            items_data = response['tasks'][0]['result'][0]['items']
+            items_data = response["tasks"][0]["result"]
             df_items = json_normalize(items_data)
             return df_items
 
