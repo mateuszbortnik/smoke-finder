@@ -129,5 +129,5 @@ if st.button('Get data'):
         mime="text/csv",
         key='download-csv'
     )
-    st.write(df.values.tolist())
+    # st.write(df.values.tolist())
     save_to_new_worksheet(df, sheet_url, new_worksheet_name)
