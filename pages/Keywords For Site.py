@@ -124,6 +124,19 @@ if st.button('Get data'):
 
         st.success("Success!")
         df = pd.DataFrame.from_dict(products)
+
+        # Iterate through each cell in the DataFrame
+        for col in df.columns:
+            for index in df.index:
+                cell_value = df.at[index, col]
+                
+                # Check if the cell value is a list
+                if isinstance(cell_value, list):
+                    # Convert the list to a string and update the cell
+                    df.at[index, col] = ', '.join(map(str, cell_value))
+
+
+
         csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
         st.write(df)
         status.update(label="Data extracted!", state="complete", expanded=True)
