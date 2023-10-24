@@ -7,6 +7,7 @@ import re
 from google.oauth2 import service_account
 from gsheetsdb import connect
 import gspread
+from pandas import json_normalize
 
 credentials = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
@@ -81,35 +82,41 @@ if st.button('Get data'):
         time.sleep(2)
 
     with st.status("Extracting data...") as status:
-    # EXTRACT
         def extract_product_details_from_response(response):
-            all_products = []
-
-            # Directly accessing the location of results based on the structure of your response
-            items = response["tasks"][0]["result"]
-            print(items)
-
-            for item in items:
-                product_info = {
-                    "keyword": item["keyword"],
-                    "location_code": (item["location_code"]),
-                    "language_code": (item["language_code"]),
-                    "search_partners": item["search_partners"],
-                    "competition": item["competition"],
-                    "competition_index": str(item["competition_index"]),
-                    "search_volume": item["search_volume"],
-                    "low_top_of_page_bid": str(item["low_top_of_page_bid"]),
-                    "high_top_of_page_bid": str(item["high_top_of_page_bid"]),
-                    "type": str(item["keyword_annotations"]["concepts"][0]["concept_group"]["type"])
+            items_data = response['tasks'][0]['result'][0]['items']
+            df_items = json_normalize(items_data)
+            return df_items
 
 
-                }
+    # # EXTRACT
+    #     def extract_product_details_from_response(response):
+    #         all_products = []
+
+    #         # Directly accessing the location of results based on the structure of your response
+    #         items = response["tasks"][0]["result"]
+    #         print(items)
+
+    #         for item in items:
+    #             product_info = {
+    #                 "keyword": item["keyword"],
+    #                 "location_code": (item["location_code"]),
+    #                 "language_code": (item["language_code"]),
+    #                 "search_partners": item["search_partners"],
+    #                 "competition": item["competition"],
+    #                 "competition_index": str(item["competition_index"]),
+    #                 "search_volume": item["search_volume"],
+    #                 "low_top_of_page_bid": str(item["low_top_of_page_bid"]),
+    #                 "high_top_of_page_bid": str(item["high_top_of_page_bid"]),
+    #                 "type": str(item["keyword_annotations"]["concepts"][0]["concept_group"]["type"])
 
 
-                all_products.append(product_info)
+    #             }
+
+
+    #             all_products.append(product_info)
                 
 
-            return all_products
+    #         return all_products
 
             # Usage
         products = extract_product_details_from_response(response)
