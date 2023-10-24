@@ -27,26 +27,27 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
     )
     conn = connect(credentials=credentials)
     gc = gspread.service_account_from_dict(st.secrets["gcp_service_account"])
-    
-    # Open the Google Sheet
-    sheet_id = sheet_url.split('/')[-2]
-    sh = gc.open_by_key(sheet_id)
-    
-    # Create a new worksheet with the given name
-    worksheet = sh.add_worksheet(title=worksheet_name, rows="10000", cols="50")
-    
-    # Clear existing data if any (should be empty since it's a new worksheet)
-    worksheet.clear()
-    
-    # Add new data
+    try:
+        # Open the Google Sheet
+        sheet_id = sheet_url.split('/')[-2]
+        sh = gc.open_by_key(sheet_id)
+        
+        # Create a new worksheet with the given name
+        worksheet = sh.add_worksheet(title=worksheet_name, rows="10000", cols="50")
+        
+        # Clear existing data if any (should be empty since it's a new worksheet)
+        worksheet.clear()
+        
+        # Add new data
 
-    worksheet.insert_rows(df.values.tolist(), row=1)
-    
-    # Add header
-    worksheet.insert_row(df.columns.tolist(), index=1)
-    
-    st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
-
+        worksheet.insert_rows(df.values.tolist(), row=1)
+        
+        # Add header
+        worksheet.insert_row(df.columns.tolist(), index=1)
+        
+        st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
 
 st.title("Google Ads keywords for site")
 st.markdown('''This endpoint will provide you with a list of keywords relevant to the specified domain along with their bids, search volumes for the last month, search volume trends for the last year (for estimating search volume dynamics), and competition levels.
