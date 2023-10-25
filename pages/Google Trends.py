@@ -7,6 +7,7 @@ from google.oauth2 import service_account
 from gsheetsdb import connect
 import gspread
 import datetime
+from pandas import json_normalize
 
 credentials = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
@@ -130,18 +131,9 @@ if st.button('Get data'):
 
         # Directly accessing the location of results based on the structure of your response
         items = response["tasks"][0]["result"][0]["items"][0]["data"]
-        # st.write("ITEMS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
-        # st.write(items)
+        df_items = json_normalize(items)
+        return df_items
 
-        for item in items:
-            product_info = {
-                    "date_from": item["date_from"],
-                    "date_to": item["date_to"],
-                    "values": item["values"]
-                }
-            all_products.append(product_info)
-
-        return all_products
 
     # # Usage
     products = extract_product_details_from_response(response)
