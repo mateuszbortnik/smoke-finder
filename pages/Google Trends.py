@@ -141,10 +141,10 @@ if st.button('Get data'):
 
     # st.success("Success!")
     df = pd.DataFrame.from_dict(products)
-    df['value_1'] = df['value'][0]
-    df['value_2'] = df['value'][1]
-    # pd.to_numeric(df["values"], errors='coerce')
-    # df['values'] = df['values'].apply(lambda x: x[0] if isinstance(x, list) and x else None)
+
+    pd.to_numeric(df["values"], errors='coerce')
+    df['value1'] = df['values'].apply(lambda x: x[0])
+    df['value2'] = df['values'].apply(lambda x: x[0])
     # df['values'].fillna('N/A', inplace=True)
     # st.write(df["values"].apply(type))
     csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
