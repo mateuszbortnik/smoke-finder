@@ -141,8 +141,8 @@ if st.button('Get data'):
 
     # st.success("Success!")
     df = pd.DataFrame.from_dict(products)
-    df['value_1'] = df['value'].apply(lambda x: x[0] if isinstance(x, list) and x else None)
-    df['value_2'] = df['value'].apply(lambda x: x[1] if isinstance(x, list) and x else None)
+    df['value_1'] = df['value'][0]
+    df['value_2'] = df['value'][1]
     # pd.to_numeric(df["values"], errors='coerce')
     # df['values'] = df['values'].apply(lambda x: x[0] if isinstance(x, list) and x else None)
     # df['values'].fillna('N/A', inplace=True)
