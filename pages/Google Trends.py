@@ -141,9 +141,9 @@ if st.button('Get data'):
 
     # st.success("Success!")
     df = pd.DataFrame.from_dict(products)
-    pd.to_numeric(df["values"], errors='coerce')
-    df['values'] = df['values'].apply(lambda x: x[0] if isinstance(x, list) and x else None)
-    df['values'].fillna('N/A', inplace=True)
+    # pd.to_numeric(df["values"], errors='coerce')
+    # df['values'] = df['values'].apply(lambda x: x[0] if isinstance(x, list) and x else None)
+    # df['values'].fillna('N/A', inplace=True)
     # st.write(df["values"].apply(type))
     csv = df.to_csv(index=False)  # Convert the dataframe to CSV string format
 
