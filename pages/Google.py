@@ -93,7 +93,7 @@ if st.button('Get data'):
         # simple way to set a task
         post_data[len(post_data)] = dict(
             cid=cid,
-            depth=100,
+            depth=4490,
             language_name="English",
             location_name="United States"
         )
