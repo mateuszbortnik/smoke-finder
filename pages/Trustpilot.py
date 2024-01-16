@@ -118,13 +118,14 @@ if st.button('Get data'):
         # Directly accessing the location of results based on the structure of your response
         items = response["tasks"][0]["result"][0]["items"]
 
-        for item in items:
-            product_info = {
-                "rating": item["rating"]["value"],
-                "timestamp": item["timestamp"],
-                "review_text": item["review_text"]
-            }
-            all_products.append(product_info)
+        if items is not None:
+            for item in items:
+                product_info = {
+                    "rating": item.get("rating", {}).get("value", "No rating"),  # Added .get() for safe access
+                    "timestamp": item.get("timestamp", "No timestamp"),  # Use .get() with default values
+                    "review_text": item.get("review_text", "No review text")
+                }
+                all_products.append(product_info)
 
         return all_products
 
