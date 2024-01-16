@@ -132,7 +132,7 @@ if st.button('Get data'):
     # products = extract_product_details_from_response(response)
     # print(products)  # This should print the details of the first product
       
-    products = [flatten(item) for item in response]     
+    products = [flatten(item) for item in response["tasks"]]     
 
 
 
