@@ -143,16 +143,21 @@ if st.button('Get data'):
         def extract_product_details_from_response(response):
             all_products = []
 
-            # Directly accessing the location of results based on the structure of your response
-            items = response["tasks"][0]["result"][0]["items"]
+            # Safely accessing nested data with .get() and ensuring 'items' is a list
+            items = response.get('tasks', [{}])[0].get('result', [{}])[0].get('items')
 
-            for item in items:
-                product_info = {
-                    "rating": item["rating"]["value"],
-                    "timestamp": item["timestamp"],
-                    "review_text": item["review_text"]
-                }
-                all_products.append(product_info)
+            if isinstance(items, list):
+                for item in items:
+                    # Using .get() with default values for nested data
+                    rating_info = item.get('rating', {})
+                    product_info = {
+                        "rating": rating_info.get("value", "No rating"),
+                        "timestamp": item.get("timestamp", "No timestamp"),
+                        "review_text": item.get("review_text", "No review text")
+                    }
+                    all_products.append(product_info)
+            else:
+                st.exception("Warning: 'items' is not a list or is missing. Returning an empty list.")
 
             return all_products
 
