@@ -77,7 +77,7 @@ if st.button('Get data'):
             print("Task ID:", task_id)
             status.update(label="Task ready!", state="complete")
         else:
-            print(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
+            st.error(f"POST error. Code: {response['status_code']} Message: {response['status_message']}")
             st.stop()
 
             # Wait a few seconds before checking task status
@@ -86,8 +86,17 @@ if st.button('Get data'):
     with st.status("Extracting data...") as status:
     # EXTRACT
         def extract_product_details_from_response(response):
-            items_data = response['tasks'][0]['result'][0]['items']
-            df_items = json_normalize(items_data)
+            # Initialize an empty DataFrame
+            df_items = pd.DataFrame()
+
+            # Safely access nested data using .get() and ensure it's a list before normalization
+            items_data = response.get('tasks', [{}])[0].get('result', [{}])[0].get('items')
+            
+            if isinstance(items_data, list):
+                df_items = pd.json_normalize(items_data)
+            else:
+                st.exception("Warning: 'items' is not a list or is missing. Returning an empty DataFrame.")
+
             return df_items
                         
 
