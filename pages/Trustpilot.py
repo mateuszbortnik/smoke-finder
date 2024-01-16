@@ -111,28 +111,28 @@ if st.button('Get data'):
 
 
 
-    # # EXTRACT
-    # def extract_product_details_from_response(response):
-    #     all_products = []
+    # EXTRACT
+    def extract_product_details_from_response(response):
+        all_products = []
 
-    #     # Directly accessing the location of results based on the structure of your response
-    #     items = response["tasks"][0]["result"][0]["items"]
+        # Directly accessing the location of results based on the structure of your response
+        items = response["tasks"][0]["result"][0]["items"]
 
-    #     for item in items:
-    #         product_info = {
-    #             "rating": item["rating"]["value"],
-    #             "timestamp": item["timestamp"],
-    #             "review_text": item["review_text"]
-    #         }
-    #         all_products.append(product_info)
+        for item in items:
+            product_info = {
+                "rating": item["rating"]["value"],
+                "timestamp": item["timestamp"],
+                "review_text": item["review_text"]
+            }
+            all_products.append(product_info)
 
-    #     return all_products
+        return all_products
 
-    # # Usage
-    # products = extract_product_details_from_response(response)
-    # print(products)  # This should print the details of the first product
+    # Usage
+    products = extract_product_details_from_response(response)
+    print(products)  # This should print the details of the first product
       
-    products = [flatten(item) for item in response["tasks"]]     
+    # products = [flatten(item) for item in response["tasks"]]     
 
 
 
