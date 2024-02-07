@@ -87,7 +87,7 @@ if st.button('Get data'):
         while not task_ready:
             # st.write(f"Retry count: {retry_count}")  # Debugging line
             response = client.get(f"/v3/business_data/yelp/reviews/task_get/{task_id}")
-            # st.write("GET response:", response)
+            st.write("GET response:", response)
 
             if response['status_code'] == 20000:
                 task_status = response['tasks'][0]['status_message']
