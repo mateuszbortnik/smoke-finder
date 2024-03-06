@@ -67,9 +67,9 @@ if st.button('Get data'):
     with st.status("Waiting for the task") as status:
         # POST request to enqueue a task
         post_data = dict()
-        post_data[len(post_data)] = dict(domain=domain,depth=depth)
+        post_data[len(post_data)] = dict(domain=domain,depth=depth,sort_by="recency")
         response = client.post("/v3/business_data/trustpilot/reviews/task_post", post_data)
-
+        
         if response["status_code"] == 20000:
             st.write("POST response:", response)
             task_id = response["tasks"][0]["id"]
