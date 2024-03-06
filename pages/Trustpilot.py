@@ -61,12 +61,13 @@ Fields descriptions and more: https://docs.dataforseo.com/v3/business_data/trust
 domain = st.text_input('Domain', 'www.ashleystewart.com')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
 new_worksheet_name = st.text_input("New worksheet name", "Trustpilot reviews")
+depth = st.number_input(min_value=0, max_value=25000, value=25000, label="Number of reviews to be extracted. Max is 25000.")
 
 if st.button('Get data'):
     with st.status("Waiting for the task") as status:
         # POST request to enqueue a task
         post_data = dict()
-        post_data[len(post_data)] = dict(domain=domain,depth=25000)
+        post_data[len(post_data)] = dict(domain=domain,depth=depth)
         response = client.post("/v3/business_data/trustpilot/reviews/task_post", post_data)
 
         if response["status_code"] == 20000:
