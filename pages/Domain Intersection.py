@@ -61,6 +61,7 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 
 target1 = st.text_input('Target domain 1', 'ashleystewart.com', key='target1')
 target2 = st.text_input('Target domain 2', 'fashionnova.com', key='target2')
+language_name = st.text_input('Language name', 'English')
 location_name = st.text_input('Location name', 'United States')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
 new_worksheet_name = st.text_input("New worksheet name", "Domain Intersection")
@@ -73,7 +74,7 @@ if st.button('Get data'):
             target1=target1,
             target2=target2,
             location_name=location_name,
-            language_name="English",
+            language_name=language_name,
 
         )
 
