@@ -58,7 +58,7 @@ target = st.text_input('Target domain', 'ashleystewart.com')
 location_name = st.text_input('Location name', 'United States')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
 new_worksheet_name = st.text_input("New worksheet name", "Competitors Domain")
-
+language_name = st.text_input('Language name', 'English')
 if st.button('Get data'):
     with st.status("Sending a POST request...") as status:
         post_data = dict()
@@ -66,7 +66,7 @@ if st.button('Get data'):
         post_data[len(post_data)] = dict(
             target=target,
             location_name=location_name,
-            language_name="English"
+            language_name=language_name
 )
 
         response = client.post("/v3/dataforseo_labs/google/competitors_domain/live", post_data)
