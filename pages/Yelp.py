@@ -56,13 +56,14 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 alias = st.text_input('Alias', 'ashley-stewart-hawthorne')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
 new_worksheet_name = st.text_input("New worksheet name", "Yelp reviews")
-
+language_name = st.text_input('Language name', 'English')
+depth = st.number_input(min_value=0, max_value=4490, value=4490, label="Number of reviews to be extracted. Max is 4490.")
 if st.button('Get data'):
     with st.status("Sending a POST request...") as status:
         # POST request to enqueue a task
         post_data = dict()
 
-        post_data[len(post_data)] = dict(language_name="English", alias=alias, depth=4490)
+        post_data[len(post_data)] = dict(language_name=language_name, alias=alias, depth=depth)
 
         response = client.post("/v3/business_data/yelp/reviews/task_post", post_data)
         
