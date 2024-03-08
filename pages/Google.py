@@ -65,7 +65,9 @@ client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
 url = st.text_input('Google Maps url', 'https://www.google.com/maps/place/Ashley+Stewart/@39.8495135,-95.0893464,6z/data=!4m10!1m2!2m1!1sashley+stewart!3m6!1s0x886b523a1ab8c599:0x61c453a9079053a5!8m2!3d39.8495135!4d-86.1245027!15sCg5hc2hsZXkgc3Rld2FydCIDiAEBWhAiDmFzaGxleSBzdGV3YXJ0kgEVd29tZW5zX2Nsb3RoaW5nX3N0b3Jl4AEA!16s%2Fg%2F1txfpx89?authuser=0&entry=ttu')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
 new_worksheet_name = st.text_input("New worksheet name", "Google reviews")
-
+language_name = st.text_input('Language name', 'English')
+location_name = st.text_input('Location name', 'United States')
+depth = st.number_input(min_value=0, max_value=4490, value=4490, label="Number of reviews to be extracted. Max is 4490.")
 def extract_cid_from_url(url):
     # Split the URL by "0x"
     parts = url.split("0x")
@@ -93,9 +95,10 @@ if st.button('Get data'):
         # simple way to set a task
         post_data[len(post_data)] = dict(
             cid=str(cid),
-            depth=4490,
-            language_name="English",
-            location_name="United States"
+            depth=depth,
+            language_name=language_name,
+            location_name=location_name,
+            sort_by="newest"
         )
 
         response = client.post("/v3/business_data/google/reviews/task_post", post_data)
