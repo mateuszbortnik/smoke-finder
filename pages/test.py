@@ -20,7 +20,7 @@ credentials = {
 }
 
 # Your configuration for cookie and preauthorized users (replace with your actual values)
-cookie_config = {
+cookie = {
     'expiry_days': 30,
     'key': 'smokefinder123',  # Replace with your actual key
     'name': 'smokefinder'  # Replace with your actual cookie name
@@ -29,9 +29,9 @@ cookie_config = {
 # Instantiate the authenticator
 authenticator = stauth.Authenticate(
     credentials=credentials,
-    cookie_name=cookie_config['name'],
-    key=cookie_config['key'],
-    cookie_expiry_days=cookie_config['expiry_days'],
+    cookie_name=cookie['name'],
+    key=cookie['key'],
+    cookie_expiry_days=cookie['expiry_days'],
     # Include preauthorized or validator if necessary
 )
 
