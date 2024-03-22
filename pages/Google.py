@@ -59,8 +59,7 @@ st.markdown('''This endpoint provides results from the “Reviews” element of 
             
 Fields descriptions and more: https://docs.dataforseo.com/v3/business_data/google/reviews/task_post/?python
                                 https://docs.dataforseo.com/v3/business_data/google/reviews/task_get/?python            ''')
-client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
-
+client = RestClient(st.secrets["email"], st.secrets["password"])
 
 url = st.text_input('Google Maps url', 'https://www.google.com/maps/place/Ashley+Stewart/@39.8495135,-95.0893464,6z/data=!4m10!1m2!2m1!1sashley+stewart!3m6!1s0x886b523a1ab8c599:0x61c453a9079053a5!8m2!3d39.8495135!4d-86.1245027!15sCg5hc2hsZXkgc3Rld2FydCIDiAEBWhAiDmFzaGxleSBzdGV3YXJ0kgEVd29tZW5zX2Nsb3RoaW5nX3N0b3Jl4AEA!16s%2Fg%2F1txfpx89?authuser=0&entry=ttu')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
