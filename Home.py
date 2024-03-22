@@ -6,7 +6,7 @@ import time
 import streamlit_authenticator as stauth
 
 
-username = st.secrets['auth_username ']
+username = st.secrets['auth_username']
 email = st.secrets['email']
 name = st.secrets['auth_name']
 password = st.secrets['auth_password']
