@@ -60,7 +60,7 @@ st.markdown('''This endpoint will provide you with detailed citation data availa
 
             
 Fields descriptions and more: https://docs.dataforseo.com/v3/content_analysis/search/live/?python          ''')
-client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
+client = RestClient(st.secrets["email"], st.secrets["password"])
 
 keyword = st.text_input('Keyword', 'Ashley Stewart')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
