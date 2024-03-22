@@ -52,8 +52,7 @@ st.title("Google Ads keywords for site")
 st.markdown('''This endpoint will provide you with a list of keywords relevant to the specified domain along with their bids, search volumes for the last month, search volume trends for the last year (for estimating search volume dynamics), and competition levels.
             
 Fields descriptions and more: https://docs.dataforseo.com/v3/keywords_data/google_ads/keywords_for_site/live/?bash            ''')
-client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
-
+client = RestClient(st.secrets["email"], st.secrets["password"])
 target = st.text_input('Target domain', 'ashleystewart.com')
 location_name = st.text_input('Location name', 'United States')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
