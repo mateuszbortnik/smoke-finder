@@ -22,8 +22,8 @@ credentials = {
 # Your configuration for cookie and preauthorized users (replace with your actual values)
 cookie_config = {
     'expiry_days': 30,
-    'key': 'some_signature_key',  # Replace with your actual key
-    'name': 'some_cookie_name'  # Replace with your actual cookie name
+    'key': 'smokefinder123',  # Replace with your actual key
+    'name': 'smokefinder'  # Replace with your actual cookie name
 }
 
 # Instantiate the authenticator
