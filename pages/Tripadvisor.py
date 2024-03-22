@@ -44,8 +44,7 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
     
     st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
 
-client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
-
+client = RestClient(st.secrets["email"], st.secrets["password"])
 st.title("Tripadvisor reviews")
 
 st.markdown('''This endpoint provides results from the “Reviews” element on the Tripadvisor platform. The results are specific to the URL path or keyword you indicate, and and the selected location
