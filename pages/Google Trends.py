@@ -56,8 +56,7 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
     except Exception as e:
         st.error(f"An error occurred: {e}")
 
-client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
-
+client = RestClient(st.secrets["email"], st.secrets["password"])
 st.title("Google Trends")
 st.markdown('''This endpoint will provide you with the keyword popularity data from the ‘Explore’ feature of Google Trends. You can check keyword trends for Google Search, Google News, Google Images, Google Shopping, and YouTube.
             
