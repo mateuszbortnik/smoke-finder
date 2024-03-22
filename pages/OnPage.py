@@ -45,8 +45,7 @@ def save_to_new_worksheet(df, sheet_url, worksheet_name):
     
     st.success(f"Data successfully saved to a new worksheet named '{worksheet_name}' in the Google Sheet.")
 
-client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
-
+client = RestClient(st.secrets["email"], st.secrets["password"])
 st.title("OnPage")
 st.markdown('''Using this function, you can get the overall information on a website as well as drill down into exact on-page issues of a website that has been scanned. As a result, you will know what functions to use for receiving detailed data for each of the found issues.
             
