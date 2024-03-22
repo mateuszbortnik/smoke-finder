@@ -19,3 +19,4 @@ gsheetsdb
 pytrends
 datetime
 flatten_json
+streamlit_authenticator
