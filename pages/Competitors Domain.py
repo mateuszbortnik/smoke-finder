@@ -52,8 +52,7 @@ st.title("Competitors Domain")
 st.markdown('''This endpoint will provide you with a full overview of ranking and traffic data of the competitor domains from organic and paid search. In addition to that, you will get the metrics specific to the keywords both competitor domains and your domain rank for within the same SERP.
             
 Fields descriptions and more: https://docs.dataforseo.com/v3/dataforseo_labs/google/competitors_domain/live/?python           ''')
-client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
-
+client = RestClient(st.secrets["email"], st.secrets["password"])
 target = st.text_input('Target domain', 'ashleystewart.com')
 location_name = st.text_input('Location name', 'United States')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
