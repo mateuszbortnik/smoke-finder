@@ -57,8 +57,7 @@ st.title("Domain Intersection")
 st.markdown('''This endpoint will provide you with the keywords for which both specified domains rank within the same SERP. You will get search volume, competition, cost-per-click and impressions data on each intersecting keyword. Along with that, you will get data on the first and second domain’s SERP element discovered for this keyword, as well as the estimated traffic volume and cost of ad traffic. Domain Intersection endpoint supports organic, paid, local pack, and featured snippet results.
             
 Fields descriptions and more: https://docs.dataforseo.com/v3/dataforseo_labs/google/competitors_domain/live/?python           ''')
-client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
-
+client = RestClient(st.secrets["email"], st.secrets["password"])
 target1 = st.text_input('Target domain 1', 'ashleystewart.com', key='target1')
 target2 = st.text_input('Target domain 2', 'fashionnova.com', key='target2')
 language_name = st.text_input('Language name', 'English')
