@@ -51,8 +51,7 @@ st.markdown('''This endpoint provides reviews published on the Yelp platform. Th
 Fields descriptions and more: https://docs.dataforseo.com/v3/business_data/yelp/reviews/task_post/?python
                             https://docs.dataforseo.com/v3/business_data/yelp/reviews/task_get/?python   ''')
 
-client = RestClient("marketing@mta.digital", "92626ed1261a7edf")
-
+client = RestClient(st.secrets["email"], st.secrets["password"])
 alias = st.text_input('Alias', 'ashley-stewart-hawthorne')
 sheet_url = st.text_input('Sheet url', "https://docs.google.com/spreadsheets/d/1pe-M1yQ4jPP8jlH7Hadw1Xkc9KZo2PRTKwaYTnrKxsI/edit#gid=0")
 new_worksheet_name = st.text_input("New worksheet name", "Yelp reviews")
